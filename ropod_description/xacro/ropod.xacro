@@ -166,10 +166,10 @@
       <ray>
         <scan>
           <horizontal>
-            <samples>720</samples>
+            <samples>360</samples>
             <resolution>1</resolution>
-            <min_angle>1.57</min_angle>
-            <max_angle>-1.57</max_angle>
+            <min_angle>-1.57</min_angle>
+            <max_angle>1.57</max_angle>
           </horizontal>
         </scan>
         <range>
@@ -190,7 +190,7 @@
       <plugin name="gazebo_ros_head_hokuyo_controller" filename="libgazebo_ros_laser.so">
         <robotNamespace>/</robotNamespace>
         <topicName>/ropod/laser/scan</topicName>
-        <frameName>hokuyo_link</frameName>
+        <frameName>/ropod/laser/scan</frameName>
       </plugin>
     </sensor>
   </gazebo>
