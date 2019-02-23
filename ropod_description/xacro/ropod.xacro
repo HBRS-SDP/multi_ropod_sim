@@ -12,7 +12,7 @@
 <xacro:property name="imu_link" value="0.025" />
 
 
-  <link name="base_link">
+  <link name="ropod/base_link">
     <visual>
       <geometry>
         <box size="${base_length} ${base_width} ${base_thickness} "/>
@@ -48,7 +48,7 @@
   </link>
 
   <joint name="right_front_wheel_joint" type="continuous">
-    <parent link="base_link"/>
+    <parent link="ropod/base_link"/>
     <child link="right_front_wheel"/>
     <axis xyz="0 0 1" />
     <origin rpy="-1.57 0 0" xyz="0.2 -0.2 -0.1"/>
@@ -72,7 +72,7 @@
   </link>
 
   <joint name="right_back_wheel_joint" type="continuous">
-    <parent link="base_link"/>
+    <parent link="ropod/base_link"/>
     <child link="right_back_wheel"/>
     <origin rpy="-1.57 0 0" xyz="-0.2 -0.2 -0.1"/>
     <axis xyz="0 0 1" />
@@ -96,7 +96,7 @@
   </link>
 
   <joint name="left_front_wheel_joint" type="continuous">
-    <parent link="base_link"/>
+    <parent link="ropod/base_link"/>
     <child link="left_front_wheel"/>
     <origin rpy="-1.57 0 0" xyz="0.2 0.2 -0.1"/>
     <axis xyz="0 0 1" />
@@ -120,7 +120,7 @@
   </link>
 
   <joint name="left_back_wheel_joint" type="continuous">
-    <parent link="base_link"/>
+    <parent link="ropod/base_link"/>
     <child link="left_back_wheel"/>
     <origin rpy="-1.57 0 0" xyz="-0.2 0.2 -0.1"/>
     <axis xyz="0 0 1" />
@@ -128,7 +128,7 @@
 
 
   <!-- Hokuyo Laser -->
-  <link name="hokuyo_link">
+  <link name="ropod/laser/scan">
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
@@ -153,12 +153,12 @@
   <joint name="hokuyo_joint" type="fixed">
     <axis xyz="0 0 1" />
     <origin xyz="0.3 0.0 0.1" rpy="0 0 0"/>
-    <parent link="base_link"/>
-    <child link="hokuyo_link"/>
+    <parent link="ropod/base_link"/>
+    <child link="ropod/laser/scan"/>
   </joint>
 
   <!-- hokuyo -->
-  <gazebo reference="hokuyo_link">
+  <gazebo reference="ropod/laser/scan">
     <sensor type="ray" name="hokuyo_sensor">
       <pose>0 0 0 0 0 0</pose>
       <visualize>true</visualize>
@@ -190,7 +190,7 @@
       <plugin name="gazebo_ros_head_hokuyo_controller" filename="libgazebo_ros_laser.so">
         <robotNamespace>/</robotNamespace>
         <topicName>/ropod/laser/scan</topicName>
-        <frameName>hokuyo_link</frameName>
+        <frameName>ropod/laser/scan</frameName>
       </plugin>
     </sensor>
   </gazebo>
@@ -221,7 +221,7 @@
 
   <joint name="imu_joint" type="fixed">
     <origin xyz="0 0 0"/>
-    <parent link="base_link"/>
+    <parent link="ropod/base_link"/>
     <child link="imu_link"/>
   </joint>
 
@@ -249,18 +249,18 @@
       <rightRearJoint>right_back_wheel_joint</rightRearJoint>
       <wheelSeparation>0.2</wheelSeparation>
       <wheelDiameter>0.035</wheelDiameter>
-      <robotBaseFrame>base_link</robotBaseFrame>
+      <robotBaseFrame>ropod/base_link</robotBaseFrame>
       <torque>5</torque>
       <commandTopic>cmd_vel</commandTopic>
       <odometryTopic>odom</odometryTopic>
-      <odometryFrame>odom</odometryFrame>
-      <childFrame>base_link</childFrame>
+      <odometryFrame>ropod/odom</odometryFrame>
+      <childFrame>ropod/base_link</childFrame>
       <broadcastTF>true</broadcastTF>
       <gaussianNoise>0.005</gaussianNoise>
     </plugin>
   </gazebo> 
 
-  <gazebo reference="base_link">
+  <gazebo reference="ropod/base_link">
     <material>Gazebo/RustySteel</material>
   </gazebo>
 
