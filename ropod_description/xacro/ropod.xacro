@@ -239,6 +239,20 @@
     </plugin>
   </gazebo>
 
+   <gazebo>
+    <plugin name="magnetometer" filename="libhector_gazebo_ros_magnetic.so">
+      <updateRate>20.0</updateRate>
+      <bodyname>imu_link</bodyname>
+      <topicName>magnetometer_status</topicName>
+      <referenceHeading>0.0</referenceHeading>
+      <declination>3.0333</declination>
+      <inclination>60.0</inclination>
+      <offset>0 0 0</offset>
+      <driftFrequency>0 0 0</driftFrequency>
+      <gaussianNoise>0 0 0</gaussianNoise>
+    </plugin>
+  </gazebo>
+
   <gazebo>
     <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
       <updateRate>50.0</updateRate>
