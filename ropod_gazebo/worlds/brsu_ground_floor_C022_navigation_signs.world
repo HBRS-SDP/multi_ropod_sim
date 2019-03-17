@@ -98,9 +98,9 @@
         <gravity>1</gravity>
       </link>
     </model>
-    <model name='navigation_sign_left'>
+    <model name='navigation_sign_right'>
       <pose frame=''>0 0 0.15 0 -0 0</pose>
-      <link name='navigation_sign_left'>
+      <link name='navigation_sign_right'>
         <visual name='visual'>
           <geometry>
             <box>
@@ -109,9 +109,9 @@
           </geometry>
           <material>
             <script>
-              <uri>model://navigation_sign_left/materials/scripts</uri>
-              <uri>model://navigation_sign_left/materials/textures</uri>
-              <name>NavigationSign/Left</name>
+              <uri>model://navigation_sign_right/materials/scripts</uri>
+              <uri>model://navigation_sign_right/materials/textures</uri>
+              <name>NavigationSign/Right</name>
             </script>
             <ambient>1 1 1 1</ambient>
             <diffuse>1 1 1 1</diffuse>
@@ -152,9 +152,9 @@
       <static>1</static>
       <allow_auto_disable>1</allow_auto_disable>
     </model>
-    <model name='navigation_sign_right'>
+    <model name='navigation_sign_left'>
       <pose frame=''>0 0 0.15 0 -0 0</pose>
-      <link name='navigation_sign_right'>
+      <link name='navigation_sign_left'>
         <visual name='visual'>
           <geometry>
             <box>
@@ -163,9 +163,9 @@
           </geometry>
           <material>
             <script>
-              <uri>model://navigation_sign_right/materials/scripts</uri>
-              <uri>model://navigation_sign_right/materials/textures</uri>
-              <name>NavigationSign/Right</name>
+              <uri>model://navigation_sign_left/materials/scripts</uri>
+              <uri>model://navigation_sign_left/materials/textures</uri>
+              <name>NavigationSign/Left</name>
             </script>
             <ambient>1 1 1 1</ambient>
             <diffuse>1 1 1 1</diffuse>
@@ -230,15 +230,15 @@
       <link name='ropod/base_link'>
         <pose frame=''>0 0 0 0 -0 0</pose>
         <inertial>
-          <pose frame=''>0 0 0 0 -0 0</pose>
-          <mass>8.00002</mass>
+          <pose frame=''>1e-06 0 0 0 -0 0</pose>
+          <mass>8.00003</mass>
           <inertia>
-            <ixx>0.500002</ixx>
+            <ixx>0.500003</ixx>
             <ixy>0</ixy>
-            <ixz>-3e-07</ixz>
-            <iyy>0.500003</iyy>
+            <ixz>-2.99999e-07</ixz>
+            <iyy>0.500005</iyy>
             <iyz>0</iyz>
-            <izz>0.500003</izz>
+            <izz>0.500005</izz>
           </inertia>
         </inertial>
         <collision name='ropod/base_link_collision'>
@@ -262,7 +262,28 @@
           </surface>
           <max_contacts>10</max_contacts>
         </collision>
-        <collision name='ropod/base_link_fixed_joint_lump__ropod/laser/scan_collision_1'>
+        <collision name='ropod/base_link_fixed_joint_lump__ropod/camera_collision_1'>
+          <pose frame=''>0.3 0 0 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.025 0.025 0.025</size>
+            </box>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode/>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <collision name='ropod/base_link_fixed_joint_lump__ropod/laser/scan_collision_2'>
           <pose frame=''>0.3 0 0.1 0 -0 0</pose>
           <geometry>
             <box>
@@ -283,7 +304,7 @@
           </surface>
           <max_contacts>10</max_contacts>
         </collision>
-        <collision name='ropod/base_link_fixed_joint_lump__imu_link_collision_2'>
+        <collision name='ropod/base_link_fixed_joint_lump__ropod/imu_collision_3'>
           <pose frame=''>0 0 0 0 -0 0</pose>
           <geometry>
             <box>
@@ -318,7 +339,21 @@
             </script>
           </material>
         </visual>
-        <visual name='ropod/base_link_fixed_joint_lump__ropod/laser/scan_visual_1'>
+        <visual name='ropod/base_link_fixed_joint_lump__ropod/camera_visual_1'>
+          <pose frame=''>0.3 0 0 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.025 0.025 0.025</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>__default__</uri>
+              <name>__default__</name>
+            </script>
+          </material>
+        </visual>
+        <visual name='ropod/base_link_fixed_joint_lump__ropod/laser/scan_visual_2'>
           <pose frame=''>0.3 0 0.1 0 -0 0</pose>
           <geometry>
             <mesh>
@@ -333,7 +368,7 @@
             </script>
           </material>
         </visual>
-        <visual name='ropod/base_link_fixed_joint_lump__imu_link_visual_2'>
+        <visual name='ropod/base_link_fixed_joint_lump__ropod/imu_visual_3'>
           <pose frame=''>0 0 0 0 -0 0</pose>
           <geometry>
             <box>
@@ -342,6 +377,43 @@
           </geometry>
         </visual>
         <velocity_decay/>
+        <velocity_decay/>
+        <sensor name='front_camera' type='camera'>
+          <update_rate>30</update_rate>
+          <camera name='head'>
+            <horizontal_fov>1.39626</horizontal_fov>
+            <image>
+              <width>800</width>
+              <height>600</height>
+              <format>R8G8B8</format>
+            </image>
+            <clip>
+              <near>0.02</near>
+              <far>300</far>
+            </clip>
+            <noise>
+              <type>gaussian</type>
+              <mean>0</mean>
+              <stddev>0.007</stddev>
+            </noise>
+          </camera>
+          <plugin name='camera_controller' filename='libgazebo_ros_camera.so'>
+            <alwaysOn>true</alwaysOn>
+            <updateRate>0.0</updateRate>
+            <cameraName>/ropod/camera</cameraName>
+            <imageTopicName>image_raw</imageTopicName>
+            <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+            <frameName>ropod/camera</frameName>
+            <hackBaseline>0.07</hackBaseline>
+            <distortionK1>0.0</distortionK1>
+            <distortionK2>0.0</distortionK2>
+            <distortionK3>0.0</distortionK3>
+            <distortionT1>0.0</distortionT1>
+            <distortionT2>0.0</distortionT2>
+            <robotNamespace>/</robotNamespace>
+          </plugin>
+          <pose frame=''>0.3 0 0 0 -0 0</pose>
+        </sensor>
         <gravity>1</gravity>
         <velocity_decay/>
         <self_collide>0</self_collide>
@@ -674,7 +746,7 @@
         <alwaysOn>true</alwaysOn>
         <updateRate>50.0</updateRate>
         <robotNamespace>ropod</robotNamespace>
-        <topicName>imu_data</topicName>
+        <topicName>ropod/imu</topicName>
         <gaussianNoise>0.0001</gaussianNoise>
         <xyzOffsets>0 0 0</xyzOffsets>
         <rpyOffsets>0 0 0</rpyOffsets>
@@ -685,8 +757,8 @@
       </plugin>
       <plugin name='magnetometer' filename='libhector_gazebo_ros_magnetic.so'>
         <updateRate>20.0</updateRate>
-        <bodyname>imu_link</bodyname>
-        <topicName>magnetometer_status</topicName>
+        <bodyname>ropod/imu</bodyname>
+        <topicName>ropod/magnetometer</topicName>
         <referenceHeading>0.0</referenceHeading>
         <declination>3.0333</declination>
         <inclination>60.0</inclination>
@@ -717,10 +789,10 @@
       <pose frame=''>0 0 1 0 -0 0</pose>
     </model>
     <state world_name='default'>
-      <sim_time>147 428000000</sim_time>
-      <real_time>168 430075418</real_time>
-      <wall_time>1552823149 39916159</wall_time>
-      <iterations>147428</iterations>
+      <sim_time>360 499000000</sim_time>
+      <real_time>442 139749258</real_time>
+      <wall_time>1552832450 156416096</wall_time>
+      <iterations>360499</iterations>
       <model name='brsu_ground_floor'>
         <pose frame=''>-85 -30 0 0 -0 0</pose>
         <scale>1 1 1</scale>
@@ -742,57 +814,57 @@
         </link>
       </model>
       <model name='navigation_sign_left'>
-        <pose frame=''>2.00079 3.44505 0.15 0 -0 0</pose>
+        <pose frame=''>2.00761 3.3957 0.15 0 -0 0</pose>
         <scale>1 1 1</scale>
         <link name='navigation_sign_left'>
-          <pose frame=''>2.00079 3.44505 0.15 0 -0 0</pose>
+          <pose frame=''>2.00761 3.3957 0.15 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
       <model name='navigation_sign_right'>
-        <pose frame=''>-1.3014 2.91837 0.15 0 -0 1.56169</pose>
+        <pose frame=''>-1.7024 2.87283 0.15 0 -0 1.55671</pose>
         <scale>1 1 1</scale>
         <link name='navigation_sign_right'>
-          <pose frame=''>-1.3014 2.91837 0.15 0 -0 1.56169</pose>
+          <pose frame=''>-1.7024 2.87283 0.15 0 -0 1.55671</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
       <model name='ropod'>
-        <pose frame=''>0.975198 -0.804428 0.180013 6e-06 -7e-06 1.38907</pose>
+        <pose frame=''>0.922248 -0.072037 0.180015 -1e-06 -0 1.46299</pose>
         <scale>1 1 1</scale>
         <link name='left_back_wheel'>
-          <pose frame=''>0.742345 -0.964987 0.080013 -1.57002 -0.100763 1.38899</pose>
-          <velocity>-0.000898 0.000329 -0.002869 0.01024 0.012334 0.000272</velocity>
-          <acceleration>-0.159887 0.115747 -9.86007 2.71286 0.632384 -0.644621</acceleration>
-          <wrench>-0.159887 0.115747 -9.86007 0 -0 0</wrench>
+          <pose frame=''>0.70189 -0.249357 0.080015 -1.5699 -0.534837 1.46254</pose>
+          <velocity>-0.000519 -0.000103 0.002701 0.000483 -0.006336 0.002645</velocity>
+          <acceleration>0.398804 -0.362735 5.57062 -2.53152 -0.541912 2.37533</acceleration>
+          <wrench>0.398804 -0.362735 5.57062 0 -0 0</wrench>
         </link>
         <link name='left_front_wheel'>
-          <pose frame=''>0.814638 -0.571574 0.080016 -1.57001 0.258755 1.38926</pose>
-          <velocity>-0.001023 0.000404 0.000267 0.010806 0.015412 0.001328</velocity>
-          <acceleration>-0.192359 0.11517 -9.94531 1.2942 0.365306 2.57609</acceleration>
-          <wrench>-0.192359 0.11517 -9.94531 0 -0 0</wrench>
+          <pose frame=''>0.744929 0.148321 0.080015 -1.56919 1.07519 1.4644</pose>
+          <velocity>-0.000772 -0.000151 -0.000464 -0.007566 0.002178 0.001271</velocity>
+          <acceleration>0.27571 -0.47626 -0.7294 1.64948 -1.40949 -0.054433</acceleration>
+          <wrench>0.27571 -0.47626 -0.7294 0 -0 0</wrench>
         </link>
         <link name='right_back_wheel'>
-          <pose frame=''>1.13576 -1.03728 0.08001 -1.57002 -0.054349 1.38902</pose>
-          <velocity>-0.000885 0.000435 -0.005564 0.010212 0.012179 0.000453</velocity>
-          <acceleration>-0.174676 0.122593 -9.64019 -2.42494 1.15802 -0.291129</acceleration>
-          <wrench>-0.174676 0.122593 -9.64019 0 -0 0</wrench>
+          <pose frame=''>1.09957 -0.292395 0.080015 -1.57002 -0.146657 1.46288</pose>
+          <velocity>-0.000498 3.6e-05 0.005392 -0.001155 -0.006058 0.002373</velocity>
+          <acceleration>0.415121 -0.329948 10.955 2.12973 -0.107495 1.92452</acceleration>
+          <wrench>0.415121 -0.329948 10.955 0 -0 0</wrench>
         </link>
         <link name='right_front_wheel'>
-          <pose frame=''>1.20805 -0.643867 0.080013 -1.57003 -0.048213 1.38903</pose>
-          <velocity>-0.00099 0.000455 -0.002455 0.010461 0.013536 0.000457</velocity>
-          <acceleration>-0.173945 0.118767 -9.7319 -1.88648 -1.49865 -0.268433</acceleration>
-          <wrench>-0.173945 0.118767 -9.7319 0 -0 0</wrench>
+          <pose frame=''>1.14261 0.105283 0.080015 -1.57003 -0.147701 1.46288</pose>
+          <velocity>-0.000633 4.6e-05 0.002287 -0.001275 -0.007706 0.002381</velocity>
+          <acceleration>0.385605 -0.332418 4.74193 -1.27901 -0.025136 -1.21425</acceleration>
+          <wrench>0.385605 -0.332418 4.74193 0 -0 0</wrench>
         </link>
         <link name='ropod/base_link'>
-          <pose frame=''>0.975198 -0.804428 0.180013 6e-06 -7e-06 1.38907</pose>
-          <velocity>-0.000318 -0.000526 -0.002656 0.008958 0.00536 0.000244</velocity>
-          <acceleration>0.087608 -0.059034 -9.80282 -0.099722 -0.164861 -0.038133</acceleration>
-          <wrench>0.700868 -0.472277 -78.4227 0 -0 0</wrench>
+          <pose frame=''>0.922248 -0.072037 0.180015 -1e-06 -0 1.46299</pose>
+          <velocity>-0.001183 0.000715 0.002476 -0.008459 -0.005925 0.000395</velocity>
+          <acceleration>-0.907109 1.26494 5.13279 1.85534 0.636966 0.152463</acceleration>
+          <wrench>-7.2569 10.1195 41.0625 0 -0 0</wrench>
         </link>
       </model>
       <light name='sun'>
@@ -801,7 +873,7 @@
     </state>
     <gui fullscreen='0'>
       <camera name='user_camera'>
-        <pose frame=''>0.514803 -5.68211 4.92782 -0 0.614617 1.481</pose>
+        <pose frame=''>0.451177 -5.30219 5.27253 0 0.747643 1.4122</pose>
         <view_controller>orbit</view_controller>
         <projection_type>perspective</projection_type>
       </camera>

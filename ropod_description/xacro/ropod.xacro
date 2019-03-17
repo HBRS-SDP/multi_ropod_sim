@@ -10,7 +10,7 @@
 <xacro:property name="inertia_base" value="0.5" />
 <xacro:property name="inertia_wheels" value="0.001" />
 <xacro:property name="imu_link" value="0.025" />
-
+<xacro:property name="camera_link" value="0.025" />
 
   <link name="ropod/base_link">
     <visual>
@@ -197,7 +197,7 @@
 
 
   <!-- IMU -->
-  <link name="imu_link">
+  <link name="ropod/imu">
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
@@ -222,7 +222,7 @@
   <joint name="imu_joint" type="fixed">
     <origin xyz="0 0 0"/>
     <parent link="ropod/base_link"/>
-    <child link="imu_link"/>
+    <child link="ropod/imu"/>
   </joint>
 
   <gazebo>
@@ -230,8 +230,8 @@
       <alwaysOn>true</alwaysOn>
       <updateRate>50.0</updateRate>
       <robotNamespace>ropod</robotNamespace> 
-      <bodyName>imu_link</bodyName>
-      <topicName>imu_data</topicName>
+      <bodyName>ropod/imu</bodyName>
+      <topicName>ropod/imu</topicName>
       <gaussianNoise>0.0001</gaussianNoise>
       <xyzOffsets>0 0 0</xyzOffsets>
       <rpyOffsets>0 0 0</rpyOffsets>
@@ -242,8 +242,8 @@
    <gazebo>
     <plugin name="magnetometer" filename="libhector_gazebo_ros_magnetic.so">
       <updateRate>20.0</updateRate>
-      <bodyname>imu_link</bodyname>
-      <topicName>magnetometer_status</topicName>
+      <bodyname>ropod/imu</bodyname>
+      <topicName>ropod/magnetometer</topicName>
       <referenceHeading>0.0</referenceHeading>
       <declination>3.0333</declination>
       <inclination>60.0</inclination>
@@ -273,6 +273,78 @@
       <gaussianNoise>0.005</gaussianNoise>
     </plugin>
   </gazebo> 
+
+  <joint name="camera_joint" type="fixed">
+    <axis xyz="0 1 0" />
+    <origin xyz="0.3 0.0 0.0" rpy="0 0 0"/>
+    <parent link="ropod/base_link"/>
+    <child link="ropod/camera"/>
+  </joint>
+
+  <!-- Camera -->
+  <link name="ropod/camera">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+    <box size="${camera_link} ${camera_link} ${camera_link}"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+    <box size="${camera_link} ${camera_link} ${camera_link}"/>
+      </geometry>
+      <material name="red"/>
+    </visual>
+
+    <inertial>
+      <mass value="1e-5" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+    </inertial>
+  </link>
+
+  <!-- camera -->
+  <gazebo reference="ropod/camera">
+    <sensor type="camera" name="front_camera">
+      <update_rate>30.0</update_rate>
+      <camera name="head">
+        <horizontal_fov>1.3962634</horizontal_fov>
+        <image>
+          <width>800</width>
+          <height>600</height>
+          <format>R8G8B8</format>
+        </image>
+        <clip>
+          <near>0.02</near>
+          <far>300</far>
+        </clip>
+        <noise>
+          <type>gaussian</type>
+          <!-- Noise is sampled independently per pixel on each frame.
+               That pixel's noise value is added to each of its color
+               channels, which at that point lie in the range [0,1]. -->
+          <mean>0.0</mean>
+          <stddev>0.007</stddev>
+        </noise>
+      </camera>
+      <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+        <alwaysOn>true</alwaysOn>
+        <updateRate>0.0</updateRate>
+        <cameraName>/ropod/camera</cameraName>
+        <imageTopicName>image_raw</imageTopicName>
+        <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+        <frameName>ropod/camera</frameName>
+        <hackBaseline>0.07</hackBaseline>
+        <distortionK1>0.0</distortionK1>
+        <distortionK2>0.0</distortionK2>
+        <distortionK3>0.0</distortionK3>
+        <distortionT1>0.0</distortionT1>
+        <distortionT2>0.0</distortionT2>
+      </plugin>
+    </sensor>
+  </gazebo>
 
   <gazebo reference="ropod/base_link">
     <material>Gazebo/RustySteel</material>
