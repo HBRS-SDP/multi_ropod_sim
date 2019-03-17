@@ -1,0 +1,44 @@
+<?xml version='1.0'?>
+<sdf version='1.5'>
+  <model name='navigation_sign_left'>
+    <pose >0 0 0.15 0 -0 0</pose>
+    <link name='navigation_sign_left'>
+      <visual name='visual'>
+        <geometry>
+          <box>
+            <size>0.3 0.03 0.3</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://navigation_sign_left/materials/scripts</uri>
+            <uri>model://navigation_sign_left/materials/textures</uri>
+            <name>NavigationSign/Left</name>
+          </script>
+          <ambient>1 1 1 1</ambient>
+          <diffuse>1 1 1 1</diffuse>
+          <specular>0 0 0 1</specular>
+          <emissive>1 1 1 0</emissive>
+          <shader type='vertex'>
+            <normal_map>__default__</normal_map>
+          </shader>
+        </material>
+        <cast_shadows>1</cast_shadows>
+        <transparency>0</transparency>
+      </visual>
+      <collision name='collision'>
+        <laser_retro>0</laser_retro>
+        <max_contacts>10</max_contacts>
+        <geometry>
+          <box>
+            <size>0.3 0.03 0.3</size>
+          </box>
+        </geometry>
+      </collision>
+    </link>
+
+    <static>1</static>
+    <allow_auto_disable>1</allow_auto_disable>
+
+  </model>
+</sdf>
