@@ -1,0 +1,18 @@
+calibration_time: "Tue 09 Apr 2019 02:33:54 PM CEST"
+image_width: 640
+image_height: 480
+flags: 0
+camera_matrix:
+   rows: 3
+   cols: 3
+   dt: d
+   data: [ 3.6558272286307174e+03, 0., 2.8743967384406238e+02, 0.,
+       3.6748921326471050e+03, 2.7406836023273962e+02, 0., 0., 1. ]
+distortion_coefficients:
+   rows: 1
+   cols: 5
+   dt: d
+   data: [ 6.6573690747393766e-01, -4.5873928185898200e+02,
+       -2.5472516205251004e-02, 5.1678417998607153e-02,
+       -3.6554081976407948e+00 ]
+avg_reprojection_error: 1.0747700341418984e+00

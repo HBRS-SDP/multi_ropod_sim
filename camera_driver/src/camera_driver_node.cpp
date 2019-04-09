@@ -14,6 +14,8 @@ int main(int argc, char** argv)
 
     ros::Publisher camera_info_pub = nh.advertise<sensor_msgs::CameraInfo>("/ropod/camera/front/info", 1);
     sensor_msgs::CameraInfo ropod_camera_front_info;
+    
+    // plumb bomb model
     ropod_camera_front_info.D = {0,0,0,0,0};
 
     double frequency;
@@ -34,7 +36,7 @@ int main(int argc, char** argv)
 
     double avg_reprojection_error;
     nh.getParam("/camera_driver_node/avg_reprojection_error", avg_reprojection_error);
-    
+
     cv::VideoCapture cap(device_id);
     // Check if video device can be opened with the given index
     if (!cap.isOpened()) return 1;
