@@ -4,7 +4,7 @@
   
   <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <arg name="world_name" value="$(find ropod_gazebo)/worlds/brsu_ground_floor_C022_navigation_signs.world"/>
+    <arg name="world_name" value="$(find ropod_gazebo)/worlds/brsu_ground_floor_full_demo.world"/>
   </include>
 
   <arg name="model" default="$(find ropod_description)/xacro/ropod.xacro"/>
