@@ -70,6 +70,10 @@ class GridGenerator:
         self.generate_poses()
 
         if self.poses is not None:
+            max_robots = len(self.poses)
+            if self.nRobots > max_robots:
+                print("WARNING: Cannot generate launch file for more than", max_robots, "robots")
+                print("Limiting number of robots to", max_robots, "robots")
             curr_dir = os.path.abspath(os.path.split(os.path.abspath(os.path.abspath(sys.argv[0])))[0])
             filepath = os.path.abspath(curr_dir + "/../launch/" + filename + ".launch")
             # Open file in write mode to overwrite existing contents
