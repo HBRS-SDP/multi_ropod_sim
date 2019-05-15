@@ -1,0 +1,39 @@
+<launch>
+
+    <!-- BEGIN ROBOT 1-->
+    <group ns="robot1">
+        <param name="tf_prefix" value="robot1_tf" />
+        <include file="$(find ropod_gazebo)/launch/spawn_single_urdf_robot.launch" >
+            <arg name="robot_id" value="Robot1" />
+            <arg name="init_x" value="0.0" />
+            <arg name="init_y" value="0.0" />
+            <arg name="init_theta" value="1.571" />
+            <arg name="model" value="ropod"/>
+        </include>
+    </group>
+
+    <!-- BEGIN ROBOT 2-->
+    <group ns="robot2">
+        <param name="tf_prefix" value="robot2_tf" />
+        <include file="$(find ropod_gazebo)/launch/spawn_single_urdf_robot.launch" >
+            <arg name="robot_id" value="Robot2" />
+            <arg name="init_x" value="1.0" />
+            <arg name="init_y" value="0.0" />
+            <arg name="init_theta" value="0.0" />
+            <arg name="model" value="ropod"/>
+        </include>
+    </group>
+
+    <!-- BEGIN ROBOT 3-->
+    <group ns="robot3">
+        <param name="tf_prefix" value="robot3_tf" />
+        <include file="$(find ropod_gazebo)/launch/spawn_single_urdf_robot.launch" >
+            <arg name="robot_id" value="Robot3" />
+            <arg name="init_x" value="0.0" />
+            <arg name="init_y" value="1.0" />
+            <arg name="init_theta" value="0.0" />
+            <arg name="model" value="ropod"/>
+        </include>
+    </group>
+
+</launch>
