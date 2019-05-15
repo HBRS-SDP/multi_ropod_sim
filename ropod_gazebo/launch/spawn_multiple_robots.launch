@@ -7,7 +7,7 @@
         <arg name="robot_id" value="Robot1" />
         <arg name="init_x" value="0.0" />
         <arg name="init_y" value="0.0" />
-        <arg name="init_theta" value="0.0" />
+        <arg name="init_theta" value="1.571" />
         <arg name="model" value="ropod"/>
         </include>
     </group>
@@ -29,8 +29,8 @@
         <param name="tf_prefix" value="robot3_tf" />
         <include file="$(find ropod_gazebo)/launch/spawn_single_urdf_robot.launch" >
         <arg name="robot_id" value="Robot3" />
-        <arg name="init_x" value="-1.0" />
-        <arg name="init_y" value="0.0" />
+        <arg name="init_x" value="0.0" />
+        <arg name="init_y" value="1.0" />
         <arg name="init_theta" value="0.0" />
         <arg name="model" value="ropod"/>
         </include>
