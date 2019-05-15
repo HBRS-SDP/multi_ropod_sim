@@ -5,8 +5,9 @@
     <arg name="init_y" default="0.0"/>
     <arg name="init_theta" default="0.0"/>
     <arg name="model" default="ropod"/>
-
     <arg name="model_path" default="$(find ropod_description)/xacro/$(arg model).xacro"/>
+
+    <!-- Load the robot description from the urdf model -->
     <param name="robot_description" command="rosrun xacro xacro '$(arg model_path)'" />
 
     <!-- http://wiki.ros.org/joint_state_publisher -->
@@ -19,6 +20,7 @@
     <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" >
     </node>
 
+    <!-- Spawn the robot using the arguments and robot description -->
     <node name="spawn_urdf_model" pkg="gazebo_ros" type="spawn_model" 
      args="-param robot_description  -urdf -x $(arg init_x) -y $(arg init_y) -z 1 -Y $(arg init_theta) -model $(arg robot_id)" />
 
