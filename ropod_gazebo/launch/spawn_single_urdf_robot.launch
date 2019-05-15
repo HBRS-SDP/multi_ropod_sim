@@ -20,6 +20,6 @@
     </node>
 
     <node name="spawn_urdf_model" pkg="gazebo_ros" type="spawn_model" 
-     args="-param robot_description  -urdf -x $(arg init_x) -y $(arg init_y) -z 1 -Z $(arg init_theta) -model $(arg robot_id)" />
+     args="-param robot_description  -urdf -x $(arg init_x) -y $(arg init_y) -z 1 -Y $(arg init_theta) -model $(arg robot_id)" />
 
 </launch>
