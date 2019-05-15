@@ -188,7 +188,7 @@
         </noise>
       </ray>
       <plugin name="gazebo_ros_head_hokuyo_controller" filename="libgazebo_ros_laser.so">
-        <robotNamespace>/</robotNamespace>
+        <!--robotNamespace>/</robotNamespace-->
         <topicName>/ropod/laser/scan</topicName>
         <frameName>ropod/laser/scan</frameName>
       </plugin>
@@ -229,7 +229,7 @@
     <plugin name="imu_controller" filename="libgazebo_ros_imu.so">
       <alwaysOn>true</alwaysOn>
       <updateRate>50.0</updateRate>
-      <robotNamespace>ropod</robotNamespace> 
+      <!--robotNamespace>ropod</robotNamespace--> 
       <bodyName>ropod/imu</bodyName>
       <topicName>ropod/imu</topicName>
       <gaussianNoise>0.0001</gaussianNoise>
@@ -256,7 +256,7 @@
   <gazebo>
     <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
       <updateRate>50.0</updateRate>
-      <robotNamespace>ropod</robotNamespace>
+      <!--robotNamespace>ropod</robotNamespace-->
       <leftFrontJoint>left_front_wheel_joint</leftFrontJoint>
       <rightFrontJoint>right_front_wheel_joint</rightFrontJoint>
       <leftRearJoint>left_back_wheel_joint</leftRearJoint>
