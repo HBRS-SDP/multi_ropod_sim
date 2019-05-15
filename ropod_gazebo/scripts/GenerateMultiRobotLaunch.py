@@ -3,6 +3,7 @@
 
 import numpy as np
 import os
+import sys
 import yaml
 import argparse
 
@@ -69,7 +70,8 @@ class GridGenerator:
         self.generate_poses()
 
         if self.poses is not None:
-            filepath = os.path.abspath(os.path.abspath(os.getcwd()) + "/../launch/" + filename + ".launch")
+            curr_dir = os.path.abspath(os.path.split(os.path.abspath(os.path.abspath(sys.argv[0])))[0])
+            filepath = os.path.abspath(curr_dir + "/../launch/" + filename + ".launch")
             # Open file in write mode to overwrite existing contents
             with open(filepath, 'w') as f:
                 f.write("<launch>\n")
@@ -90,7 +92,7 @@ def main():
     parser.add_argument("--model", type=str, help="Name of the URDF model to be used for the robots", default="ropod")
     args = parser.parse_args()
 
-    curr_dir = os.path.abspath(os.getcwd())
+    curr_dir = os.path.abspath(os.path.split(os.path.abspath(os.path.abspath(sys.argv[0])))[0])
     config_filepath = os.path.abspath(curr_dir + "/resources/" + args.world + ".yaml")
 
     if os.path.isfile(config_filepath):
