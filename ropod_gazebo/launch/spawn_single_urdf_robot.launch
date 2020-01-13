@@ -1,3 +1,4 @@
+<?xml version='1.0'?>
 <launch>
     <!-- Based on the ROS answer https://answers.ros.org/question/41433/multiple-robots-simulation-and-navigation/?answer=41434#post-id-41434 -->
     <arg name="robot_id"/>
@@ -8,7 +9,7 @@
     <arg name="model_path" default="$(find ropod_description)/xacro/$(arg model).xacro"/>
 
     <!-- Load the robot description from the urdf model -->
-    <param name="robot_description" command="rosrun xacro xacro '$(arg model_path)'" />
+    <param name="robot_description" command="rosrun xacro xacro '$(arg model_path)' namespace:=$(arg robot_id)" />
 
     <!-- http://wiki.ros.org/joint_state_publisher -->
     <!--param name="value" command="rosrun xacro xacro '$(arg model)'" /-->
@@ -22,6 +23,6 @@
 
     <!-- Spawn the robot using the arguments and robot description -->
     <node name="spawn_urdf_model" pkg="gazebo_ros" type="spawn_model" 
-     args="-param robot_description  -urdf -x $(arg init_x) -y $(arg init_y) -z 1 -Y $(arg init_theta) -model $(arg robot_id)" />
+     args="-param robot_description  -urdf -x $(arg init_x) -y $(arg init_y) -z 0.0 -Y $(arg init_theta) -model $(arg robot_id)" />
 
 </launch>
