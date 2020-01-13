@@ -55,9 +55,9 @@ class GridGenerator:
 
         return'''   <!-- BEGIN ROBOT {id}-->
         <group ns="robot{id}">
-            <param name="tf_prefix" value="robot{id}_tf" />
+            <param name="tf_prefix" value="robot{id}" />
             <include file="$(find ropod_gazebo)/launch/spawn_single_urdf_robot.launch" >
-                <arg name="robot_id" value="Robot{id}" />
+                <arg name="robot_id" value="robot{id}" />
                 <arg name="init_x" value="{x}" />
                 <arg name="init_y" value="{y}" />
                 <arg name="init_theta" value="{theta}" />
@@ -96,8 +96,10 @@ def main():
     parser.add_argument("--model", type=str, help="Name of the URDF model to be used for the robots", default="ropod")
     args = parser.parse_args()
 
-    curr_dir = os.path.abspath(os.path.split(os.path.abspath(os.path.abspath(sys.argv[0])))[0])
-    config_filepath = os.path.abspath(curr_dir + "/resources/" + args.world + ".yaml")
+    # curr_dir = os.path.abspath(os.path.split(os.path.abspath(os.path.abspath(sys.argv[0])))[0])
+    scripts_dir = os.path.abspath(os.path.dirname(__file__))
+    main_dir = os.path.dirname(scripts_dir)
+    config_filepath = os.path.abspath(main_dir + "/config/" + args.world + ".yaml")
 
     if os.path.isfile(config_filepath):
         grid_gen = GridGenerator(config_filepath, args.nRobots, args.model)
