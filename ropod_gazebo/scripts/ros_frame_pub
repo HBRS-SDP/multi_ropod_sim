@@ -29,8 +29,8 @@ class OdomTfPublisher(object):
         ori = [pose.orientation.x, pose.orientation.y, pose.orientation.z, pose.orientation.w]
         self.tf_br.sendTransform(pos, ori, rospy.Time.now(),
                                  robot_name+'/base_link', robot_name+'/odom')
-        self.tf_br.sendTransform([0.0, 0.0, 0.0], [0.0, 0.0, 0.0, 1.0],
-                                 rospy.Time.now(), robot_name+'/odom', '/world')
+        # self.tf_br.sendTransform([0.0, 0.0, 0.0], [0.0, 0.0, 0.0, 1.0],
+        #                          rospy.Time.now(), robot_name+'/odom', '/world')
 
 if __name__ == "__main__":
     rospy.init_node('odom_tf_pub')
