@@ -6,7 +6,7 @@
     <arg name="world" default="brsu_ground_floor"/>
     <arg name="paused" default="false"/>
     <arg name="use_sim_time" default="true"/>
-    <arg name="gui" default="false"/>
+    <arg name="gui" default="true"/>
     <arg name="debug" default="false"/>
     
     <!-- Load the world -->
@@ -20,4 +20,6 @@
 
     <!-- Instantiate the robots -->
     <include file="$(find ropod_gazebo)/launch/spawn_multiple_robots.launch" />
+
+    <node pkg="ropod_gazebo" name="odom_tf_pub" type="ros_frame_pub" respawn="true" output="screen" />
 </launch>
