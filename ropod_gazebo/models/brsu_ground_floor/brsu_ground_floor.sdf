@@ -1,7 +1,7 @@
 <?xml version='1.0'?>
 <sdf version='1.5'>
  <model name="brsu_ground_floor">
-    <pose>-85 -30 0  0 0 0</pose>
+    <pose>-85 -30 1.25  0 0 0</pose>
     <static>true</static>
     <link name="body">
       <visual name="visual">
