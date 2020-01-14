@@ -1,39 +1,52 @@
 <?xml version='1.0'?>
 <launch>
-   <!-- BEGIN ROBOT 1-->
-        <group ns="robot1">
-            <param name="tf_prefix" value="robot1" />
-            <include file="$(find ropod_gazebo)/launch/spawn_single_urdf_robot.launch" >
-                <arg name="robot_id" value="robot1" />
-                <arg name="init_x" value="-2.0" />
-                <arg name="init_y" value="-1.0" />
-                <arg name="init_theta" value="1.571" />
-                <arg name="model" value="ropod"/>
-            </include>
-        </group>
+	<arg name="map_offset_x" default="0.0" />
+	<arg name="map_offset_y" default="0.0" />
+	<arg name="map_offset_theta" default="0.0" />
 
-   <!-- BEGIN ROBOT 2-->
-        <group ns="robot2">
-            <param name="tf_prefix" value="robot2" />
-            <include file="$(find ropod_gazebo)/launch/spawn_single_urdf_robot.launch" >
-                <arg name="robot_id" value="robot2" />
-                <arg name="init_x" value="-1.0" />
-                <arg name="init_y" value="-1.0" />
-                <arg name="init_theta" value="1.571" />
-                <arg name="model" value="ropod"/>
-            </include>
-        </group>
+	<!-- ROBOT 1-->
+	<group ns="robot1">
+		<param name="tf_prefix" value="robot1" />
+		<include file="$(find ropod_gazebo)/launch/spawn_single_urdf_robot.launch" >
+			<arg name="robot_id" value="robot1" />
+			<arg name="init_x" value="-2.0" />
+			<arg name="init_y" value="-1.0" />
+			<arg name="init_theta" value="1.571" />
+			<arg name="model" value="ropod"/>
+			<arg name="map_offset_x" value="$(arg map_offset_x)" />
+			<arg name="map_offset_y" value="$(arg map_offset_y)" />
+			<arg name="map_offset_theta" value="$(arg map_offset_theta)" />
+		</include>
+	</group>
 
-   <!-- BEGIN ROBOT 3-->
-        <group ns="robot3">
-            <param name="tf_prefix" value="robot3" />
-            <include file="$(find ropod_gazebo)/launch/spawn_single_urdf_robot.launch" >
-                <arg name="robot_id" value="robot3" />
-                <arg name="init_x" value="0.0" />
-                <arg name="init_y" value="-1.0" />
-                <arg name="init_theta" value="1.571" />
-                <arg name="model" value="ropod"/>
-            </include>
-        </group>
+	<!-- ROBOT 2-->
+	<group ns="robot2">
+		<param name="tf_prefix" value="robot2" />
+		<include file="$(find ropod_gazebo)/launch/spawn_single_urdf_robot.launch" >
+			<arg name="robot_id" value="robot2" />
+			<arg name="init_x" value="-1.0" />
+			<arg name="init_y" value="-1.0" />
+			<arg name="init_theta" value="1.571" />
+			<arg name="model" value="ropod"/>
+			<arg name="map_offset_x" value="$(arg map_offset_x)" />
+			<arg name="map_offset_y" value="$(arg map_offset_y)" />
+			<arg name="map_offset_theta" value="$(arg map_offset_theta)" />
+		</include>
+	</group>
+
+	<!-- ROBOT 3-->
+	<group ns="robot3">
+		<param name="tf_prefix" value="robot3" />
+		<include file="$(find ropod_gazebo)/launch/spawn_single_urdf_robot.launch" >
+			<arg name="robot_id" value="robot3" />
+			<arg name="init_x" value="0.0" />
+			<arg name="init_y" value="-1.0" />
+			<arg name="init_theta" value="1.571" />
+			<arg name="model" value="ropod"/>
+			<arg name="map_offset_x" value="$(arg map_offset_x)" />
+			<arg name="map_offset_y" value="$(arg map_offset_y)" />
+			<arg name="map_offset_theta" value="$(arg map_offset_theta)" />
+		</include>
+	</group>
 
 </launch>

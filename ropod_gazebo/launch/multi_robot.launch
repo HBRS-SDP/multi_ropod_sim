@@ -3,6 +3,13 @@
     <env name="GAZEBO_RESOURCE_PATH" value="$(find ropod_gazebo)/resources/:$(optenv GAZEBO_MODEL_PATH)"/>
     <env name="GAZEBO_MODEL_PATH" value="$(find ropod_gazebo)/models:$(optenv GAZEBO_MODEL_PATH)"/>
 
+    <!-- MAP PARAMS -->
+    <arg name="map_file" default="$(find ropod_navigation_test)/../occupancy_grids/brsu/brsu-c-floor0_osm/map.yaml" />
+    <!-- offset between gazebo world origin and map origin -->
+    <arg name="map_offset_x" default="59.95" />
+    <arg name="map_offset_y" default="25.6" />
+    <arg name="map_offset_theta" default="0.0" />
+
     <arg name="world" default="brsu_ground_floor"/>
     <arg name="paused" default="false"/>
     <arg name="use_sim_time" default="true"/>
@@ -19,7 +26,15 @@
     </include>
 
     <!-- Instantiate the robots -->
-    <include file="$(find ropod_gazebo)/launch/spawn_multiple_robots.launch" />
+    <include file="$(find ropod_gazebo)/launch/spawn_multiple_robots.launch" >
+        <arg name="map_offset_x" value="$(arg map_offset_x)" />
+        <arg name="map_offset_y" value="$(arg map_offset_y)" />
+        <arg name="map_offset_theta" value="$(arg map_offset_theta)" />
+    </include>
 
     <node pkg="ropod_gazebo" name="odom_tf_pub" type="ros_frame_pub" respawn="true" output="screen" />
+
+    <!-- Run the map server -->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
+
 </launch>
