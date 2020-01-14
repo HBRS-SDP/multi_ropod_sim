@@ -134,12 +134,12 @@
     <!-- HOLONOMIC DRIVE PLUGIN -->
     <!-- ====================== -->
     <gazebo>
-        <plugin name="${namespace}_controller" filename="libgazebo_ros_planar_move.so">
-            <commandTopic>cmd_vel</commandTopic>
-            <odometryTopic>odom</odometryTopic>
-            <odometryFrame>odom</odometryFrame>
-            <odometryRate>20.0</odometryRate>
-            <robotBaseFrame>base_link</robotBaseFrame>
+    <plugin name="${namespace}_odometry_plugin" filename="libOdometry_Plugin.so">
+            <updateRate>20.0</updateRate>
+            <veltopicName>/${namespace}/cmd_vel</veltopicName>
+            <odomtopicName>/${namespace}/odom</odomtopicName>
+            <robotBaseFrame>/${namespace}/base_link</robotBaseFrame>
+            <odomFrame>/${namespace}/odom</odomFrame>
         </plugin>
     </gazebo>
 

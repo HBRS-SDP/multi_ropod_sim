@@ -1,0 +1,5 @@
+- git:
+    local-name: ropod_sim_model
+    uri: https://github.com/ropod-project/ropod_sim_model.git
+    version: master
+
