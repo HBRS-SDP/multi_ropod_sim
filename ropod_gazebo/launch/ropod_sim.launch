@@ -8,10 +8,10 @@
   </include>
 
   <arg name="model" default="$(find ropod_description)/xacro/ropod.xacro"/>
-  <param name="robot_description" command="rosrun xacro xacro '$(arg model)'" />
+  <param name="robot_description" command="rosrun xacro xacro --inorder '$(arg model)'" />
 
   <!-- http://wiki.ros.org/joint_state_publisher -->
-  <param name="value" command="rosrun xacro xacro '$(arg model)'" />
+  <param name="value" command="rosrun xacro xacro --inorder '$(arg model)'" />
   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
     <param name="rate" value="10"/>
   </node>

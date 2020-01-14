@@ -9,7 +9,7 @@
     <arg name="model_path" default="$(find ropod_description)/xacro/$(arg model).xacro"/>
 
     <!-- Load the robot description from the urdf model -->
-    <param name="robot_description" command="rosrun xacro xacro '$(arg model_path)' namespace:=$(arg robot_id)" />
+    <param name="robot_description" command="rosrun xacro xacro --inorder '$(arg model_path)' namespace:=$(arg robot_id)" />
 
     <!-- http://wiki.ros.org/joint_state_publisher -->
     <!--param name="value" command="rosrun xacro xacro '$(arg model)'" /-->
