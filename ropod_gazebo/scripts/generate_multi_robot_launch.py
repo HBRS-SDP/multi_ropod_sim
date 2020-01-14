@@ -53,17 +53,20 @@ class GridGenerator:
     def get_robot_config(self, id, x, y, theta):
         data = {'id': id, 'x': x, 'y': y, 'theta': theta, 'model': self.model_name}
 
-        return'''   <!-- BEGIN ROBOT {id}-->
-        <group ns="robot{id}">
-            <param name="tf_prefix" value="robot{id}" />
-            <include file="$(find ropod_gazebo)/launch/spawn_single_urdf_robot.launch" >
-                <arg name="robot_id" value="robot{id}" />
-                <arg name="init_x" value="{x}" />
-                <arg name="init_y" value="{y}" />
-                <arg name="init_theta" value="{theta}" />
-                <arg name="model" value="{model}"/>
-            </include>
-        </group>\n\n'''.format(**data)
+        return'''\t<!-- ROBOT {id}-->
+\t<group ns="robot{id}">
+\t\t<param name="tf_prefix" value="robot{id}" />
+\t\t<include file="$(find ropod_gazebo)/launch/spawn_single_urdf_robot.launch" >
+\t\t\t<arg name="robot_id" value="robot{id}" />
+\t\t\t<arg name="init_x" value="{x}" />
+\t\t\t<arg name="init_y" value="{y}" />
+\t\t\t<arg name="init_theta" value="{theta}" />
+\t\t\t<arg name="model" value="{model}"/>
+\t\t\t<arg name="map_offset_x" value="$(arg map_offset_x)" />
+\t\t\t<arg name="map_offset_y" value="$(arg map_offset_y)" />
+\t\t\t<arg name="map_offset_theta" value="$(arg map_offset_theta)" />
+\t\t</include>
+\t</group>\n\n'''.format(**data)
 
     def generate_launch_file(self, filename="spawn_multiple_robots"):
         self.load_config_file()
@@ -77,9 +80,13 @@ class GridGenerator:
             curr_dir = os.path.abspath(os.path.split(os.path.abspath(os.path.abspath(sys.argv[0])))[0])
             filepath = os.path.abspath(curr_dir + "/../launch/" + filename + ".launch")
             # Open file in write mode to overwrite existing contents
+            header = '''<?xml version='1.0'?>
+<launch>
+\t<arg name="map_offset_x" default="0.0" />
+\t<arg name="map_offset_y" default="0.0" />
+\t<arg name="map_offset_theta" default="0.0" />\n\n'''
             with open(filepath, 'w') as f:
-                f.write("<?xml version='1.0'?>\n")
-                f.write("<launch>\n")
+                f.write(header)
 
             # Open file in append mode to append robot configurations
             with open(filepath, 'a') as f:
