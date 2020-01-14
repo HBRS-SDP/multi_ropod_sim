@@ -1,3 +1,4 @@
+<?xml version='1.0'?>
 <launch>
    <!-- BEGIN ROBOT 1-->
         <group ns="robot1">

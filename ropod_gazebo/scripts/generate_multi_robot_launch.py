@@ -78,6 +78,7 @@ class GridGenerator:
             filepath = os.path.abspath(curr_dir + "/../launch/" + filename + ".launch")
             # Open file in write mode to overwrite existing contents
             with open(filepath, 'w') as f:
+                f.write("<?xml version='1.0'?>\n")
                 f.write("<launch>\n")
 
             # Open file in append mode to append robot configurations
