@@ -9,6 +9,8 @@
     <!--- Run AMCL -->
     <node pkg="amcl" type="amcl" name="$(arg robot_name)_amcl" ns="/" output="screen">
         <remap from="scan" to="/$(arg robot_name)/scan"/>
+        <remap from="/amcl_pose" to="/$(arg robot_name)_amcl/pose"/>
+        <remap from="/particlecloud" to="/$(arg robot_name)_amcl/particlecloud"/>
 
         <!--- Odometery model parameters  -->
         <param name="odom_model_type" value="omni"/>
