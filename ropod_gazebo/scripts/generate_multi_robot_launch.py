@@ -6,6 +6,7 @@ import os
 import sys
 import yaml
 import argparse
+from matplotlib import cm
 
 class GridGenerator:
     def __init__(self, config_filepath, nRobots, model_name):
@@ -97,6 +98,34 @@ class GridGenerator:
                         break
                 f.write("</launch>")
 
+def generate_rviz_config(nRobots, filename="multi_ropod_sim"):
+    main_dir = os.path.dirname(os.path.abspath(os.path.dirname(__file__)))
+    rviz_config_file = os.path.abspath(main_dir + "/config/" + filename + ".rviz")
+    with open(rviz_config_file, 'w') as rviz_cfg:
+        rviz_config_dir = os.path.abspath(main_dir + "/config/rviz_config")
+        pre_group_cfg = os.path.abspath(rviz_config_dir + "/pre_group_config.yaml")
+        post_group_cfg = os.path.abspath(rviz_config_dir + "/post_group_config.yaml")
+        robot_group_cfg = os.path.abspath(rviz_config_dir + "/robot_group_config.yaml")
+
+        # Write the rviz config sections that appear before the robot configurations 
+        with open(pre_group_cfg, 'r') as pre_group:
+            rviz_cfg.write(pre_group.read())
+
+        # Write configurations for each individual robots
+        with open(robot_group_cfg, 'r') as robot_group:
+            group_description = robot_group.read()
+            cmap =  cm.get_cmap('gist_rainbow')
+            color_id = np.linspace(0.0, 1.0, nRobots)
+            for i in range(nRobots):
+                color = (np.array(cmap(color_id[i]))[0:3] * 255).astype(int)
+                data = {'id':i+1, 'r':color[0], 'g':color[1], 'b':color[2]}
+                rviz_cfg.write(group_description.format(**data))
+
+        # Write th rviz config that should follow the robots configurations
+        with open(post_group_cfg, 'r') as post_group:
+            rviz_cfg.write(post_group.read())
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("world", type=str, help="Name of the world which will be used for launching the robots")
@@ -104,7 +133,6 @@ def main():
     parser.add_argument("--model", type=str, help="Name of the URDF model to be used for the robots", default="ropod")
     args = parser.parse_args()
 
-    # curr_dir = os.path.abspath(os.path.split(os.path.abspath(os.path.abspath(sys.argv[0])))[0])
     scripts_dir = os.path.abspath(os.path.dirname(__file__))
     main_dir = os.path.dirname(scripts_dir)
     config_filepath = os.path.abspath(main_dir + "/config/" + args.world + ".yaml")
@@ -114,6 +142,8 @@ def main():
         grid_gen.generate_launch_file()
     else:
         print("Error! Config file for world", args.world, "not found at", config_filepath)
+
+    generate_rviz_config(args.nRobots)
 
 if __name__ == "__main__":
     main()

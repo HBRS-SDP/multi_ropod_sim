@@ -139,7 +139,7 @@ Visualization Manager:
           Axis: Z
           Channel Name: intensity
           Class: rviz/LaserScan
-          Color: 255; 0; 0
+          Color: 255; 0; 40
           Color Transformer: FlatColor
           Decay Time: 0
           Enabled: true
@@ -274,7 +274,7 @@ Visualization Manager:
           Axis: Z
           Channel Name: intensity
           Class: rviz/LaserScan
-          Color: 0; 0; 255
+          Color: 0; 255; 139
           Color Transformer: FlatColor
           Decay Time: 0
           Enabled: true
@@ -409,7 +409,7 @@ Visualization Manager:
           Axis: Z
           Channel Name: intensity
           Class: rviz/LaserScan
-          Color: 255; 85; 0
+          Color: 255; 0; 191
           Color Transformer: FlatColor
           Decay Time: 0
           Enabled: true
