@@ -33,3 +33,10 @@ Optionally, the number of robots to be launched or the robot URDF model can be s
 ```
 python3 ropod_gazebo/scripts/generate_multi_robot_launch.py brsu_ground_floor --nRobots=5 --model=dummyModel
 ```
+
+## Teleoperate the robots
+It is possible to teleoperate the the robots using the `teleop_keyboard.launch` file. For example to control a robot whoes `ID` is 2 use the command
+
+```
+roslaunch ropod_gazebo teleop_keyboard.launch robot_id:=2
+```

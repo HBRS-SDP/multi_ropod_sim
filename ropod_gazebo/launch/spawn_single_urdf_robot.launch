@@ -28,10 +28,10 @@
      args="-param robot_description -urdf -x $(arg init_x) -y $(arg init_y) -z 0.0 -Y $(arg init_theta) -model $(arg robot_id)" />
 
     <include file="$(find ropod_gazebo)/launch/maneuver_navigation.launch">
-		<arg name="robot_name" value="$(arg robot_id)" />
-		<arg name="initial_pose_x" value="$(eval arg('init_x') + arg('map_offset_x'))" />
-		<arg name="initial_pose_y" value="$(eval arg('init_y') + arg('map_offset_y'))" />
-		<arg name="initial_pose_a" value="$(eval arg('init_theta') + arg('map_offset_theta'))" />
+        <arg name="robot_name" value="$(arg robot_id)" />
+        <arg name="initial_pose_x" value="$(eval arg('init_x') + arg('map_offset_x'))" />
+        <arg name="initial_pose_y" value="$(eval arg('init_y') + arg('map_offset_y'))" />
+        <arg name="initial_pose_a" value="$(eval arg('init_theta') + arg('map_offset_theta'))" />
     </include>
 
 </launch>
