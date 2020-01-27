@@ -134,13 +134,13 @@
         - Alpha: 1
           Buffer Length: 1
           Class: rviz/Path
-          Color: 25; 255; 0
+          Color: {r}; {g}; {b}
           Enabled: false
           Head Diameter: 0.300000012
           Head Length: 0.200000003
           Length: 0.300000012
-          Line Style: Lines
-          Line Width: 0.0299999993
+          Line Style: Billboards
+          Line Width: 0.0500000007
           Name: GlobalPath
           Offset:
             X: 0
@@ -151,20 +151,20 @@
           Radius: 0.0299999993
           Shaft Diameter: 0.100000001
           Shaft Length: 0.100000001
-          Topic: /robot{id}_move_base/TrajectoryPlannerROS/global_plan
+          Topic: /robot{id}_move_base/NavfnROS/plan
           Unreliable: false
           Value: false
         - Alpha: 1
           Buffer Length: 1
           Class: rviz/Path
-          Color: 255; 0; 0
+          Color: 0; 0; 255
           Enabled: false
           Head Diameter: 0.300000012
           Head Length: 0.200000003
           Length: 0.300000012
-          Line Style: Lines
-          Line Width: 0.0299999993
-          Name: LocalPath
+          Line Style: Billboards
+          Line Width: 0.0500000007
+          Name: DWALocalPath
           Offset:
             X: 0
             Y: 0
@@ -177,5 +177,46 @@
           Topic: /robot{id}_move_base/TrajectoryPlannerROS/local_plan
           Unreliable: false
           Value: false
+        - Alpha: 0.699999988
+          Class: rviz/Map
+          Color Scheme: costmap
+          Draw Behind: false
+          Enabled: false
+          Name: LocalCostMap
+          Topic: /robot{id}_move_base/local_costmap/costmap
+          Unreliable: false
+          Use Timestamp: false
+          Value: false
+        - Alpha: 1
+          Arrow Length: 0.300000012
+          Axes Length: 0.300000012
+          Axes Radius: 0.00999999978
+          Class: rviz/PoseArray
+          Color: 0; 0; 255
+          Enabled: false
+          Head Length: 0.0700000003
+          Head Radius: 0.0299999993
+          Name: TEBLocalPath
+          Shaft Length: 0.230000004
+          Shaft Radius: 0.00999999978
+          Shape: Arrow (Flat)
+          Topic: /robot{id}_move_base/TebLocalPlannerROS/teb_poses
+          Unreliable: false
+          Value: false
+        - Alpha: 1
+          Axes Length: 1
+          Axes Radius: 0.100000001
+          Class: rviz/Pose
+          Color: {r}; {g}; {b}
+          Enabled: true
+          Head Length: 0.100000001
+          Head Radius: 0.100000001
+          Name: GoalPose
+          Shaft Length: 0.300000012
+          Shaft Radius: 0.0500000007
+          Shape: Arrow
+          Topic: /robot{id}_move_base/current_goal
+          Unreliable: false
+          Value: true
       Enabled: true
       Name: Robot{id}
