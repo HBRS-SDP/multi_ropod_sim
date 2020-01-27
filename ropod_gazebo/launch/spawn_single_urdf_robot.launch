@@ -13,7 +13,8 @@
     <arg name="start_move_base" default="true"/>
 
     <!-- Load the robot description from the urdf model -->
-    <param name="robot_description" command="rosrun xacro xacro --inorder '$(arg model_path)' namespace:=$(arg robot_id)" />
+    <param name="robot_description" 
+           command="rosrun xacro xacro --inorder '$(arg model_path)' namespace:=$(arg robot_id)" />
 
     <!-- http://wiki.ros.org/joint_state_publisher -->
     <!--param name="value" command="rosrun xacro xacro '$(arg model)'" /-->
@@ -26,7 +27,7 @@
 
     <!-- Spawn the robot using the arguments and robot description -->
     <node name="spawn_urdf_model" pkg="gazebo_ros" type="spawn_model" 
-     args="-param robot_description -urdf -x $(arg init_x) -y $(arg init_y) -z 0.0 -Y $(arg init_theta) -model $(arg robot_id)" />
+          args="-param robot_description -urdf -x $(arg init_x) -y $(arg init_y) -z 0.0 -Y $(arg init_theta) -model $(arg robot_id)" />
 
     <include file="$(find ropod_gazebo)/launch/maneuver_navigation.launch">
         <arg name="robot_name" value="$(arg robot_id)" />

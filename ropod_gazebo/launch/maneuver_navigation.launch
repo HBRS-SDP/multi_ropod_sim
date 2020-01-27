@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
 
-    <arg name="robot_name" default="robot"/>  
+    <arg name="robot_name" default="robot"/>
     <arg name="initial_pose_x" default="0.0"/>
     <arg name="initial_pose_y" default="0.0"/>
     <arg name="initial_pose_a" default="0.0"/>
@@ -50,7 +50,7 @@
         <param name="laser_lambda_short" value="0.1"/>
         <param name="laser_likelihood_max_dist" value="1.0"/>
         <param name="laser_model_type" value="likelihood_field"/>
-        
+
         <!-- initial pose of the robot -->
         <param name="initial_pose_x" value="$(arg initial_pose_x)"/>
         <param name="initial_pose_y" value="$(arg initial_pose_y)"/>
