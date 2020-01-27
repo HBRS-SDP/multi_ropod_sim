@@ -5,9 +5,9 @@ find_package(catkin REQUIRED
     ropod_sim_model
 )
 
+catkin_python_setup()
+
 catkin_package()
 
 include_directories(
 )
-
-
