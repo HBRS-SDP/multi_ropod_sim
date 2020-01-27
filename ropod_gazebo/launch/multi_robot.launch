@@ -9,6 +9,8 @@
     <arg name="map_offset_x" default="59.95" />
     <arg name="map_offset_y" default="25.6" />
     <arg name="map_offset_theta" default="0.0" />
+    <arg name="start_move_base" default="true"/>
+    <arg name="nav_name" default="move_base_dwa" />
 
     <arg name="world" default="brsu_ground_floor"/>
     <arg name="paused" default="false"/>
@@ -30,7 +32,8 @@
         <arg name="map_offset_x" value="$(arg map_offset_x)" />
         <arg name="map_offset_y" value="$(arg map_offset_y)" />
         <arg name="map_offset_theta" value="$(arg map_offset_theta)" />
-        <arg name="start_move_base" value="true"/>
+        <arg name="start_move_base" value="$(arg start_move_base)"/>
+        <arg name="nav_name" value="$(arg nav_name)"/>
     </include>
 
     <node pkg="ropod_gazebo" name="odom_tf_pub" type="ros_frame_pub" respawn="true" output="screen" />

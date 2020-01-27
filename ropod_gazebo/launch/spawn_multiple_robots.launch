@@ -4,6 +4,7 @@
 	<arg name="map_offset_y" default="0.0" />
 	<arg name="map_offset_theta" default="0.0" />
 	<arg name="start_move_base" default="true" />
+	<arg name="nav_name" default="move_base_dwa" />
 
 	<!-- ROBOT 1-->
 	<group ns="robot1">
@@ -18,6 +19,7 @@
 			<arg name="map_offset_y" value="$(arg map_offset_y)" />
 			<arg name="map_offset_theta" value="$(arg map_offset_theta)" />
 			<arg name="start_move_base" value="$(arg start_move_base)"/>
+			<arg name="nav_name" value="$(arg nav_name)"/>
 		</include>
 	</group>
 
@@ -34,6 +36,7 @@
 			<arg name="map_offset_y" value="$(arg map_offset_y)" />
 			<arg name="map_offset_theta" value="$(arg map_offset_theta)" />
 			<arg name="start_move_base" value="$(arg start_move_base)"/>
+			<arg name="nav_name" value="$(arg nav_name)"/>
 		</include>
 	</group>
 
@@ -50,6 +53,7 @@
 			<arg name="map_offset_y" value="$(arg map_offset_y)" />
 			<arg name="map_offset_theta" value="$(arg map_offset_theta)" />
 			<arg name="start_move_base" value="$(arg start_move_base)"/>
+			<arg name="nav_name" value="$(arg nav_name)"/>
 		</include>
 	</group>
 
