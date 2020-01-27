@@ -7,6 +7,8 @@ import sys
 import yaml
 import argparse
 from matplotlib import cm
+import glob
+import shutil
 
 class GridGenerator:
     def __init__(self, config_filepath, nRobots, model_name):
@@ -125,6 +127,31 @@ def generate_rviz_config(nRobots, filename="multi_ropod_sim"):
         with open(post_group_cfg, 'r') as post_group:
             rviz_cfg.write(post_group.read())
 
+def generate_move_base_configs(nRobots):
+    main_dir = os.path.dirname(os.path.abspath(os.path.dirname(__file__)))
+    move_base_config_dir = os.path.abspath(main_dir + "/config/move_base_config")
+
+    # Clear any existing params directories
+    for dirname in glob.glob(move_base_config_dir + "/robot*"):
+        shutil.rmtree(dirname, ignore_errors=True)
+
+    # Read param config and template files
+    move_base_params = {}
+    param_names = ["costmap_common_params", "global_costmap_params", "local_costmap_params"]
+    for i in range(len(param_names)):
+        with open(os.path.abspath(move_base_config_dir + "/" + param_names[i] + "_template.yaml"), 'r') as f:
+            move_base_params[param_names[i]] = f.read()
+
+    # Create new config files for all the robots
+    for i in range(nRobots):
+        # Create a directory for the current robot config
+        dir_name = move_base_config_dir + "/robot"+str(i+1)
+        os.mkdir(dir_name)
+        # Generate the config files
+        data = {'id':i+1}
+        for j in range(len(param_names)):
+            with open(os.path.abspath(dir_name + "/" + param_names[j] + ".yaml"), 'w') as f:
+                f.write(move_base_params[param_names[j]].format(**data))
 
 def main():
     parser = argparse.ArgumentParser()
@@ -144,6 +171,7 @@ def main():
         print("Error! Config file for world", args.world, "not found at", config_filepath)
 
     generate_rviz_config(args.nRobots)
+    generate_move_base_configs(args.nRobots)
 
 if __name__ == "__main__":
     main()

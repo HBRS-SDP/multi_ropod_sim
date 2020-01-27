@@ -11,4 +11,3 @@ laser_scan_sensor:
     topic: /robot1/scan
     marking: true
     clearing: true
-
