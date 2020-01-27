@@ -10,6 +10,7 @@
     <arg name="map_offset_theta" default="0.0" />
     <arg name="model" default="ropod"/>
     <arg name="model_path" default="$(find ropod_description)/xacro/$(arg model).xacro"/>
+    <arg name="start_move_base" default="true"/>
 
     <!-- Load the robot description from the urdf model -->
     <param name="robot_description" command="rosrun xacro xacro --inorder '$(arg model_path)' namespace:=$(arg robot_id)" />
@@ -32,6 +33,10 @@
         <arg name="initial_pose_x" value="$(eval arg('init_x') + arg('map_offset_x'))" />
         <arg name="initial_pose_y" value="$(eval arg('init_y') + arg('map_offset_y'))" />
         <arg name="initial_pose_a" value="$(eval arg('init_theta') + arg('map_offset_theta'))" />
+    </include>
+
+    <include file="$(find ropod_gazebo)/launch/move_base_ropod.launch" if="$(arg start_move_base)">
+        <arg name="robot_name" value="$(arg robot_id)" />
     </include>
 
 </launch>

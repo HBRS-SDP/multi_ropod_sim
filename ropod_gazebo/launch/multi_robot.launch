@@ -30,6 +30,7 @@
         <arg name="map_offset_x" value="$(arg map_offset_x)" />
         <arg name="map_offset_y" value="$(arg map_offset_y)" />
         <arg name="map_offset_theta" value="$(arg map_offset_theta)" />
+        <arg name="start_move_base" value="true"/>
     </include>
 
     <node pkg="ropod_gazebo" name="odom_tf_pub" type="ros_frame_pub" respawn="true" output="screen" />

@@ -68,6 +68,7 @@ class GridGenerator:
 \t\t\t<arg name="map_offset_x" value="$(arg map_offset_x)" />
 \t\t\t<arg name="map_offset_y" value="$(arg map_offset_y)" />
 \t\t\t<arg name="map_offset_theta" value="$(arg map_offset_theta)" />
+\t\t\t<arg name="start_move_base" value="$(arg start_move_base)"/>
 \t\t</include>
 \t</group>\n\n'''.format(**data)
 
@@ -87,7 +88,8 @@ class GridGenerator:
 <launch>
 \t<arg name="map_offset_x" default="0.0" />
 \t<arg name="map_offset_y" default="0.0" />
-\t<arg name="map_offset_theta" default="0.0" />\n\n'''
+\t<arg name="map_offset_theta" default="0.0" />
+\t<arg name="start_move_base" default="true" />\n\n'''
             with open(filepath, 'w') as f:
                 f.write(header)
 
