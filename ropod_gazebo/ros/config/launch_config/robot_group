@@ -1,0 +1,18 @@
+	<!-- ROBOT {id}-->
+	<group ns="robot{id}">
+		<param name="tf_prefix" value="robot{id}" />
+		<include file="$(find ropod_gazebo)/ros/launch/spawn_single_urdf_robot.launch" >
+			<arg name="robot_id" value="robot{id}" />
+			<arg name="init_x" value="{x}" />
+			<arg name="init_y" value="{y}" />
+			<arg name="init_theta" value="{theta}" />
+			<arg name="model" value="{model}"/>
+			<arg name="map_offset_x" value="$(arg map_offset_x)" />
+			<arg name="map_offset_y" value="$(arg map_offset_y)" />
+			<arg name="map_offset_theta" value="$(arg map_offset_theta)" />
+			<arg name="start_move_base" value="$(arg start_move_base)"/>
+			<arg name="nav_name" value="$(arg nav_name)"/>
+		</include>
+	</group>
+
+

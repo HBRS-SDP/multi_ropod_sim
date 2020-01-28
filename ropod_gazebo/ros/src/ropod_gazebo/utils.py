@@ -9,7 +9,18 @@ class Utils(object):
     """Utility functions for multi ropod simulation"""
 
     @staticmethod
-    def generate_rviz_config(generated_files_dir, config_dir, nRobots, filename="multi_ropod_sim"):
+    def generate_rviz_config(generated_files_dir, config_dir, num_of_robots,
+                             filename="multi_ropod_sim"):
+        """Generate rviz config file containing all robots along with their
+           necessary topics
+
+        :generated_files_dir: str
+        :config_dir: str
+        :num_of_robots: int
+        :filename:str
+        :returns: None
+
+        """
         rviz_config_file = os.path.join(generated_files_dir, filename + '.rviz')
         with open(rviz_config_file, 'w') as rviz_cfg:
             rviz_config_dir = os.path.join(config_dir, "rviz_config")
@@ -25,8 +36,8 @@ class Utils(object):
             with open(robot_group_cfg, 'r') as robot_group:
                 group_description = robot_group.read()
                 cmap =  cm.get_cmap('gist_rainbow')
-                color_id = np.linspace(0.0, 1.0, nRobots)
-                for i in range(nRobots):
+                color_id = np.linspace(0.0, 1.0, num_of_robots)
+                for i in range(num_of_robots):
                     color = (np.array(cmap(color_id[i]))[0:3] * 255).astype(int)
                     data = {'id':i+1, 'r':color[0], 'g':color[1], 'b':color[2]}
                     rviz_cfg.write(group_description.format(**data))
@@ -36,7 +47,15 @@ class Utils(object):
                 rviz_cfg.write(post_group.read())
 
     @staticmethod
-    def generate_move_base_configs(generated_files_dir, config_dir, nRobots):
+    def generate_move_base_configs(generated_files_dir, config_dir, num_of_robots):
+        """Generate costmap config files for each robot
+
+        :generated_files_dir: str
+        :config_dir: str
+        :num_of_robots: int
+        :returns: None
+
+        """
         move_base_config_dir = os.path.join(config_dir, "move_base_config")
 
         # Read costmap param template files
@@ -48,7 +67,7 @@ class Utils(object):
                 move_base_params[param_name] = f.read()
 
         # Create new costmap param files for all the robots
-        for i in range(nRobots):
+        for i in range(num_of_robots):
             # Create a directory for the current robot config
             dir_name = os.path.join(generated_files_dir, "robot" + str(i+1))
             os.mkdir(dir_name)
