@@ -27,7 +27,7 @@ def main():
     else:
         print("Error! Config file for world", args.world, "not found at", config_dir)
 
-    # Utils.generate_rviz_config(generated_files_dir, config_dir, args.nRobots)
+    Utils.generate_rviz_config(generated_files_dir, config_dir, args.nRobots)
     Utils.generate_move_base_configs(generated_files_dir, config_dir, args.nRobots)
 
 if __name__ == "__main__":
