@@ -10,7 +10,7 @@
     <arg name="map_offset_y" default="25.6" />
     <arg name="map_offset_theta" default="0.0" />
     <arg name="start_move_base" default="true"/>
-    <arg name="nav_name" default="move_base_teb" />
+    <arg name="nav_name" default="move_base_dwa" />
 
     <arg name="world" default="brsu_ground_floor"/>
     <arg name="paused" default="false"/>
