@@ -28,18 +28,18 @@
     <!-- Spawn the robot using the arguments and robot description -->
     <node name="spawn_urdf_model" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -x $(arg init_x) -y $(arg init_y) -z 0.0 -Y $(arg init_theta) -model $(arg robot_id)" />
 
-    <include file="$(find ropod_gazebo)/launch/maneuver_navigation.launch">
-        <arg name="robot_name" value="$(arg robot_id)" />
-        <arg name="initial_pose_x" value="$(eval arg('init_x') + arg('map_offset_x'))" />
-        <arg name="initial_pose_y" value="$(eval arg('init_y') + arg('map_offset_y'))" />
-        <arg name="initial_pose_a" value="$(eval arg('init_theta') + arg('map_offset_theta'))" />
-    </include>
-
     <group if="$(arg start_move_base)">
-        <include file="$(find ropod_gazebo)/launch/move_base_dwa.launch" if="$(eval arg('nav_name') == 'move_base_dwa')">
+        <include file="$(find ropod_gazebo)/ros/launch/amcl.launch">
+            <arg name="robot_name" value="$(arg robot_id)" />
+            <arg name="initial_pose_x" value="$(eval arg('init_x') + arg('map_offset_x'))" />
+            <arg name="initial_pose_y" value="$(eval arg('init_y') + arg('map_offset_y'))" />
+            <arg name="initial_pose_a" value="$(eval arg('init_theta') + arg('map_offset_theta'))" />
+        </include>
+
+        <include file="$(find ropod_gazebo)/ros/launch/move_base_dwa.launch" if="$(eval arg('nav_name') == 'move_base_dwa')">
             <arg name="robot_name" value="$(arg robot_id)" />
         </include>
-        <include file="$(find ropod_gazebo)/launch/move_base_teb.launch" if="$(eval arg('nav_name') == 'move_base_teb')">
+        <include file="$(find ropod_gazebo)/ros/launch/move_base_teb.launch" if="$(eval arg('nav_name') == 'move_base_teb')">
             <arg name="robot_name" value="$(arg robot_id)" />
         </include>
     </group>

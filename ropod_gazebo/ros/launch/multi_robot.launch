@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
-    <env name="GAZEBO_RESOURCE_PATH" value="$(find ropod_gazebo)/resources/:$(optenv GAZEBO_MODEL_PATH)"/>
-    <env name="GAZEBO_MODEL_PATH" value="$(find ropod_gazebo)/models:$(optenv GAZEBO_MODEL_PATH)"/>
+    <env name="GAZEBO_RESOURCE_PATH" value="$(find ropod_gazebo)/common/resources/:$(optenv GAZEBO_MODEL_PATH)"/>
+    <env name="GAZEBO_MODEL_PATH" value="$(find ropod_gazebo)/common/models:$(optenv GAZEBO_MODEL_PATH)"/>
 
     <!-- MAP PARAMS -->
     <arg name="map_file" default="$(find ropod_navigation_test)/../occupancy_grids/brsu/brsu-c-floor0_osm/map.yaml" />
@@ -10,17 +10,18 @@
     <arg name="map_offset_y" default="25.6" />
     <arg name="map_offset_theta" default="0.0" />
     <arg name="start_move_base" default="true"/>
-    <arg name="nav_name" default="move_base_dwa" />
+    <arg name="nav_name" default="move_base_teb" />
 
     <arg name="world" default="brsu_ground_floor"/>
     <arg name="paused" default="false"/>
     <arg name="use_sim_time" default="true"/>
     <arg name="gui" default="false"/>
     <arg name="debug" default="false"/>
+    <arg name="start_rviz" default="true"/>
 
     <!-- Load the world -->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
-        <arg name="world_name" value="$(find ropod_gazebo)/worlds/$(arg world).world"/>
+        <arg name="world_name" value="$(find ropod_gazebo)/common/worlds/$(arg world).world"/>
         <arg name="debug" value="$(arg debug)" />
         <arg name="gui" value="$(arg gui)" />
         <arg name="paused" value="$(arg paused)"/>
@@ -28,7 +29,7 @@
     </include>
 
     <!-- Instantiate the robots -->
-    <include file="$(find ropod_gazebo)/launch/spawn_multiple_robots.launch" >
+    <include file="$(find ropod_gazebo)/ros/generated_files/spawn_multiple_robots.launch" >
         <arg name="map_offset_x" value="$(arg map_offset_x)" />
         <arg name="map_offset_y" value="$(arg map_offset_y)" />
         <arg name="map_offset_theta" value="$(arg map_offset_theta)" />

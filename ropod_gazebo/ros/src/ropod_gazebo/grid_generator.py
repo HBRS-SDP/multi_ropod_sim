@@ -53,7 +53,7 @@ class GridGenerator:
         return'''\t<!-- ROBOT {id}-->
 \t<group ns="robot{id}">
 \t\t<param name="tf_prefix" value="robot{id}" />
-\t\t<include file="$(find ropod_gazebo)/launch/spawn_single_urdf_robot.launch" >
+\t\t<include file="$(find ropod_gazebo)/ros/launch/spawn_single_urdf_robot.launch" >
 \t\t\t<arg name="robot_id" value="robot{id}" />
 \t\t\t<arg name="init_x" value="{x}" />
 \t\t\t<arg name="init_y" value="{y}" />
