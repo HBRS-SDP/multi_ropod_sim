@@ -27,15 +27,15 @@ def main():
         if os.path.isfile(init_poses_filepath):
             spawn_poses = Utils.load_pose_list(init_poses_filepath)
         else:
-            print("Error! Config file for robot spawn poses not found at", init_poses_filepath)
+            raise Exception("Config file for robot spawn poses not found at", init_poses_filepath)
     else:
         print("Generating robot spawn poses using the grid generator")
-        world_bbox_filepath = os.path.join(config_dir, args.world + '_BBox.yaml')
+        world_bbox_filepath = os.path.join(config_dir, args.world + '_bbox.yaml')
         if os.path.isfile(world_bbox_filepath):
-            grid_gen = GridGenerator(config_dir, world_bbox_filepath, args.nRobots, args.model)
+            grid_gen = GridGenerator(world_bbox_filepath)
             spawn_poses = grid_gen.generate_poses()
         else:
-            print("Error! BBox config file for world", args.world, "not found at", world_bbox_filepath)
+            raise Exception("BBox config file for world", args.world, "not found at", world_bbox_filepath)
 
     Utils.reinitialise_generated_files_dir(generated_files_dir)
     Utils.generate_launch_file(spawn_poses, args.nRobots, config_dir, args.model)

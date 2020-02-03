@@ -7,14 +7,11 @@ class GridGenerator:
 
     """Generate a grid of robots considering num of robots and walls
 
-    :config_dir: str
     :world_filepath: str
-    :num_of_robots: int
-    :model_name: str
-    
+
     """
 
-    def __init__(self, config_dir, world_filepath, num_of_robots, model_name):
+    def __init__(self, world_filepath):
         self._world_filepath = world_filepath
 
         self.bottom_left = None

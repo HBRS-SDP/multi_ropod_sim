@@ -103,7 +103,7 @@ class Utils(object):
             with open(pose_filename) as f:
                 pose_list = yaml.load(f)
         else:
-            print("ERROR! YAML pose file not found at", pose_filename)
+            raise Exception("ERROR! YAML pose file not found at", pose_filename)
         return pose_list
 
     @staticmethod
@@ -167,4 +167,4 @@ class Utils(object):
                         break
                 f.write("</launch>")
         else:
-            assert(pose_list is not None)
+            raise Exception("Invalid robot spawn pose list!")
