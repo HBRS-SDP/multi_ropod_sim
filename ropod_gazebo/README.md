@@ -11,7 +11,13 @@ python3 ros/scripts/generate_multi_robot_launch.py brsu_ground_floor
 Optionally, the number of robots to be launched can be specified using the script parameters as shown below:
 
 ```
-python3 ropod_gazebo/scripts/generate_multi_robot_launch.py brsu_ground_floor --nRobots=5
+python3 ros/scripts/generate_multi_robot_launch.py brsu_ground_floor --nRobots=5
+```
+
+It is also possible to use custom spawn positions for the robots instead of the automatically generating them. The spawn poses have to be defined in a YAML config file named `<world_name>_init_poses.yaml` (for example `brsu_ground_floor_init_poses.yaml`) in the directory `ropod_gazebo/ros/config/`. To use the custom spawn poses, execute the script with the `custom_poses` flag as
+
+```
+python3 ros/scripts/generate_multi_robot_launch.py brsu_ground_floor --custom_poses
 ```
 
 ## Launch multi robot simulation
