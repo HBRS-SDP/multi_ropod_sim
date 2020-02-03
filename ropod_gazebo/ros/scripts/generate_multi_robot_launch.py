@@ -16,7 +16,7 @@ def main():
     scripts_dir = os.path.abspath(os.path.dirname(__file__))
     main_dir = os.path.dirname(scripts_dir)
     config_dir = os.path.join(main_dir, 'config')
-    world_filepath = os.path.join(config_dir, args.world + '.yaml')
+    world_filepath = os.path.join(config_dir, args.world + '_BBox.yaml')
     generated_files_dir = os.path.join(main_dir, 'generated_files')
 
     Utils.reinitialise_generated_files_dir(generated_files_dir)
