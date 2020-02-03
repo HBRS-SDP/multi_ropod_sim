@@ -23,14 +23,15 @@ def main():
     spawn_poses = None
     if args.custom_poses:
         print("Loading custom robot spawn poses")
-        init_poses_filepath = os.path.join(config_dir, args.world + '_init_poses.yaml')
+        init_poses_filepath = os.path.join(config_dir, 'spawn_pose_config', args.world + '_init_poses.yaml')
         if os.path.isfile(init_poses_filepath):
             spawn_poses = Utils.load_pose_list(init_poses_filepath)
         else:
             raise Exception("Config file for robot spawn poses not found at", init_poses_filepath)
     else:
         print("Generating robot spawn poses using the grid generator")
-        world_bbox_filepath = os.path.join(config_dir, args.world + '_bbox.yaml')
+        world_bbox_filepath = os.path.join(config_dir, 'spawn_pose_config', args.world + '_bbox.yaml')
+        print(world_bbox_filepath)
         if os.path.isfile(world_bbox_filepath):
             grid_gen = GridGenerator(world_bbox_filepath)
             spawn_poses = grid_gen.generate_poses()
