@@ -23,7 +23,8 @@ def main():
 
     if os.path.isfile(world_filepath):
         grid_gen = GridGenerator(config_dir, world_filepath, args.nRobots, args.model)
-        grid_gen.generate_launch_file()
+        pose_list = grid_gen.generate_poses()
+        Utils.generate_launch_file(pose_list, args.nRobots, config_dir, args.model)
     else:
         print("Error! Config file for world", args.world, "not found at", config_dir)
 

@@ -89,3 +89,47 @@ class Utils(object):
         """
         shutil.rmtree(generated_files_dir, ignore_errors=True)
         os.mkdir(generated_files_dir)
+
+    @staticmethod
+    def get_rviz_robot_group_config(id, x, y, theta, model_name, config_dir):
+        data = {'id': id, 'x': x, 'y': y, 'theta': theta, 'model': model_name}
+        launch_config_dir = os.path.join(config_dir, 'launch_config')
+        robot_group_filepath = os.path.join(launch_config_dir, 'robot_group')
+        with open(robot_group_filepath, 'r') as file_obj:
+            robot_group_str = file_obj.read()
+
+        return robot_group_str.format(**data)
+
+    @staticmethod
+    def generate_launch_file(pose_list, num_robots, config_dir, model_name, filename="spawn_multiple_robots"):
+        if pose_list is not None:
+            max_robots = len(pose_list)
+            if num_robots > max_robots:
+                print("WARNING: Cannot generate launch file for more than", max_robots, "robots")
+                print("Limiting number of robots to", max_robots, "robots")
+            main_dir = os.path.dirname(config_dir)
+            generated_files_dir = os.path.join(main_dir, 'generated_files')
+            launch_filepath = os.path.join(generated_files_dir, filename + '.launch')
+
+            # read the header for launch file
+            launch_config_dir = os.path.join(config_dir, 'launch_config')
+            pre_group_filepath = os.path.join(launch_config_dir, 'pre_group')
+            with open(pre_group_filepath, 'r') as file_obj:
+                pre_group_str = file_obj.read()
+
+            # Open file in write mode to overwrite existing contents
+            with open(launch_filepath, 'w') as f:
+                f.write(pre_group_str)
+
+            # Open file in append mode to append robot configurations
+            with open(launch_filepath, 'a') as f:
+                for i, pose in enumerate(pose_list):
+                    robot_id = i+1
+                    f.write(Utils.get_rviz_robot_group_config(robot_id, pose[0],
+                                                              pose[1], pose[2],
+                                                              model_name, config_dir))
+                    if robot_id >= num_robots:
+                        break
+                f.write("</launch>")
+        else:
+            assert(pose_list is not None)
