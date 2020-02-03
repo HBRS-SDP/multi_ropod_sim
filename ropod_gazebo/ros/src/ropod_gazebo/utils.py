@@ -93,12 +93,31 @@ class Utils(object):
 
     @staticmethod
     def load_pose_list(pose_filename):
-        with open(pose_filename) as f:
-            pose_list = yaml.load(f)
+        """Load the YAML file containing the custom spawn poses for the robots
+
+        :pose_filename: str
+
+        """
+        pose_list = None
+        if os.path.isfile(pose_filename):
+            with open(pose_filename) as f:
+                pose_list = yaml.load(f)
+        else:
+            print("ERROR! YAML pose file not found at", pose_filename)
         return pose_list
 
     @staticmethod
     def get_rviz_robot_group_config(id, x, y, theta, model_name, config_dir):
+        """Generate the robot group config string to be used in the RViz launch file
+
+        :id: str
+        :x: float
+        :y: float
+        :theta: float
+        :model_name: str
+        :config_dir: str
+
+        """
         data = {'id': id, 'x': x, 'y': y, 'theta': theta, 'model': model_name}
         launch_config_dir = os.path.join(config_dir, 'launch_config')
         robot_group_filepath = os.path.join(launch_config_dir, 'robot_group')
@@ -109,6 +128,15 @@ class Utils(object):
 
     @staticmethod
     def generate_launch_file(pose_list, num_robots, config_dir, model_name, filename="spawn_multiple_robots"):
+        """Generate a RViz launch file that can load multiple robots with unique namespaces
+
+        :pose_list: list[list[float]]
+        :num_robots: int
+        :config_dir: str
+        :model_name: str
+        :filename: str
+
+        """
         if pose_list is not None:
             max_robots = len(pose_list)
             if num_robots > max_robots:

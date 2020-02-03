@@ -17,20 +17,20 @@ def main():
     scripts_dir = os.path.abspath(os.path.dirname(__file__))
     main_dir = os.path.dirname(scripts_dir)
     config_dir = os.path.join(main_dir, 'config')
-    world_bbox_filepath = os.path.join(config_dir, args.world + '_BBox.yaml')
-    init_poses_filepath = os.path.join(config_dir, args.world + '_init_poses.yaml')
     generated_files_dir = os.path.join(main_dir, 'generated_files')
 
     # Load/ generate robot spawn poses
     spawn_poses = None
     if args.custom_poses:
         print("Loading custom robot spawn poses")
+        init_poses_filepath = os.path.join(config_dir, args.world + '_init_poses.yaml')
         if os.path.isfile(init_poses_filepath):
             spawn_poses = Utils.load_pose_list(init_poses_filepath)
         else:
             print("Error! Config file for robot spawn poses not found at", init_poses_filepath)
     else:
         print("Generating robot spawn poses using the grid generator")
+        world_bbox_filepath = os.path.join(config_dir, args.world + '_BBox.yaml')
         if os.path.isfile(world_bbox_filepath):
             grid_gen = GridGenerator(config_dir, world_bbox_filepath, args.nRobots, args.model)
             spawn_poses = grid_gen.generate_poses()
