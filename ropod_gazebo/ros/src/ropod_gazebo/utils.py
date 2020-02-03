@@ -3,6 +3,7 @@ import numpy as np
 from matplotlib import cm
 import glob
 import shutil
+import yaml
 
 class Utils(object):
 
@@ -89,6 +90,12 @@ class Utils(object):
         """
         shutil.rmtree(generated_files_dir, ignore_errors=True)
         os.mkdir(generated_files_dir)
+
+    @staticmethod
+    def load_pose_list(pose_filename):
+        with open(pose_filename) as f:
+            pose_list = yaml.load(f)
+        return pose_list
 
     @staticmethod
     def get_rviz_robot_group_config(id, x, y, theta, model_name, config_dir):

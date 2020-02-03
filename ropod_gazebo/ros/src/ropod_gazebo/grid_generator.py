@@ -51,8 +51,8 @@ class GridGenerator:
         pose_list = []
         for i in range(mesh[0].shape[0]):
             for j in range(mesh[0].shape[1]):
-                x = mesh[0][i, j]
-                y = mesh[1][i, j]
+                x = mesh[0][i, j].astype(float)
+                y = mesh[1][i, j].astype(float)
                 pose_list.append([x, y, self.orientation])
 
         return pose_list
