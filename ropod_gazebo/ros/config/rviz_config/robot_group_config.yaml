@@ -49,9 +49,9 @@
               Show Axes: false
               Show Trail: false
               Value: true
-          Name: Robot{id}
-          Robot Description: robot{id}/robot_description
-          TF Prefix: robot{id}
+          Name: ropod_{id}
+          Robot Description: ropod_{id}/robot_description
+          TF Prefix: ropod_{id}
           Update Interval: 0
           Value: true
           Visual Enabled: true
@@ -80,7 +80,7 @@
           Size (Pixels): 3
           Size (m): 0.00999999978
           Style: Points
-          Topic: /robot{id}/scan
+          Topic: /ropod_{id}/scan
           Unreliable: false
           Use Fixed Frame: true
           Use rainbow: true
@@ -112,7 +112,7 @@
           Shaft Length: 1
           Shaft Radius: 0.0500000007
           Shape: Arrow
-          Topic: /robot{id}_amcl/pose
+          Topic: /ropod_{id}_amcl/pose
           Unreliable: false
           Value: false
         - Alpha: 1
@@ -128,7 +128,7 @@
           Shaft Length: 0.230000004
           Shaft Radius: 0.00999999978
           Shape: Arrow (Flat)
-          Topic: /robot{id}_amcl/particlecloud
+          Topic: /ropod_{id}_amcl/particlecloud
           Unreliable: false
           Value: false
         - Alpha: 1
@@ -151,7 +151,7 @@
           Radius: 0.0299999993
           Shaft Diameter: 0.100000001
           Shaft Length: 0.100000001
-          Topic: /robot{id}_move_base/NavfnROS/plan
+          Topic: /ropod_{id}_move_base/NavfnROS/plan
           Unreliable: false
           Value: false
         - Alpha: 1
@@ -174,7 +174,7 @@
           Radius: 0.0299999993
           Shaft Diameter: 0.100000001
           Shaft Length: 0.100000001
-          Topic: /robot{id}_move_base/TrajectoryPlannerROS/local_plan
+          Topic: /ropod_{id}_move_base/TrajectoryPlannerROS/local_plan
           Unreliable: false
           Value: false
         - Alpha: 0.699999988
@@ -183,7 +183,7 @@
           Draw Behind: false
           Enabled: false
           Name: LocalCostMap
-          Topic: /robot{id}_move_base/local_costmap/costmap
+          Topic: /ropod_{id}_move_base/local_costmap/costmap
           Unreliable: false
           Use Timestamp: false
           Value: false
@@ -200,7 +200,7 @@
           Shaft Length: 0.230000004
           Shaft Radius: 0.00999999978
           Shape: Arrow (Flat)
-          Topic: /robot{id}_move_base/TebLocalPlannerROS/teb_poses
+          Topic: /ropod_{id}_move_base/TebLocalPlannerROS/teb_poses
           Unreliable: false
           Value: false
         - Alpha: 1
@@ -215,8 +215,8 @@
           Shaft Length: 0.300000012
           Shaft Radius: 0.0500000007
           Shape: Arrow
-          Topic: /robot{id}_move_base/current_goal
+          Topic: /ropod_{id}_move_base/current_goal
           Unreliable: false
           Value: true
       Enabled: true
-      Name: Robot{id}
+      Name: ropod_{id}

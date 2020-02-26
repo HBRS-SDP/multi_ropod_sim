@@ -6,8 +6,8 @@ inflation_radius: 0.4
 
 observation_sources: laser_scan_sensor
 laser_scan_sensor:
-    sensor_frame: /robot{id}/front_laser_link
+    sensor_frame: /ropod_{id}/front_laser_link
     data_type: LaserScan
-    topic: /robot{id}/scan
+    topic: /ropod_{id}/scan
     marking: true
     clearing: true

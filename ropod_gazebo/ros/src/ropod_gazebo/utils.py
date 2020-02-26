@@ -70,7 +70,7 @@ class Utils(object):
         # Create new costmap param files for all the robots
         for i in range(num_of_robots):
             # Create a directory for the current robot config
-            dir_name = os.path.join(generated_files_dir, "robot" + str(i+1))
+            dir_name = os.path.join(generated_files_dir, "ropod_" + str(i+1))
             os.mkdir(dir_name)
             # Generate the costmap param files
             data = {'id':i+1}
