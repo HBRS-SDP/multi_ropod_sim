@@ -40,7 +40,7 @@ class Utils(object):
                 color_id = np.linspace(0.0, 1.0, num_of_robots)
                 for i in range(num_of_robots):
                     color = (np.array(cmap(color_id[i]))[0:3] * 255).astype(int)
-                    data = {'id':i+1, 'r':color[0], 'g':color[1], 'b':color[2]}
+                    data = {'id':"{0:0=3d}".format(i+1), 'r':color[0], 'g':color[1], 'b':color[2]}
                     rviz_cfg.write(group_description.format(**data))
 
             # Write th rviz config that should follow the robots configurations
@@ -70,10 +70,11 @@ class Utils(object):
         # Create new costmap param files for all the robots
         for i in range(num_of_robots):
             # Create a directory for the current robot config
-            dir_name = os.path.join(generated_files_dir, "ropod_" + str(i+1))
+            id_num = "{0:0=3d}".format(i+1)
+            dir_name = os.path.join(generated_files_dir, "ropod_" + id_num)
             os.mkdir(dir_name)
             # Generate the costmap param files
-            data = {'id':i+1}
+            data = {'id':id_num}
             for param_name in param_names:
                 param_filepath = os.path.join(dir_name, param_name + '.yaml')
                 with open(param_filepath, 'w') as f:
@@ -160,8 +161,8 @@ class Utils(object):
             with open(launch_filepath, 'a') as f:
                 for i, pose in enumerate(pose_list):
                     robot_id = i+1
-                    f.write(Utils.get_rviz_robot_group_config(robot_id, pose[0],
-                                                              pose[1], pose[2],
+                    f.write(Utils.get_rviz_robot_group_config("{0:0=3d}".format(robot_id), 
+                                                              pose[0], pose[1], pose[2],
                                                               model_name, config_dir))
                     if robot_id >= num_robots:
                         break
