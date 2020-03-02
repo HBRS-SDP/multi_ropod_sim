@@ -12,6 +12,7 @@
     <arg name="model_path" default="$(find ropod_description)/xacro/$(arg model).xacro"/>
     <arg name="start_move_base" default="true"/>
     <arg name="nav_name" default="move_base_dwa"/>
+    <arg name="building" default="BRSU"/>
 
     <!-- Load the robot description from the urdf model -->
     <param name="robot_description" command="rosrun xacro xacro --inorder '$(arg model_path)' namespace:=$(arg robot_id)" />
@@ -39,9 +40,42 @@
         <include file="$(find ropod_gazebo)/ros/launch/move_base_dwa.launch" if="$(eval arg('nav_name') == 'move_base_dwa')">
             <arg name="robot_name" value="$(arg robot_id)" />
         </include>
+
         <include file="$(find ropod_gazebo)/ros/launch/move_base_teb.launch" if="$(eval arg('nav_name') == 'move_base_teb')">
             <arg name="robot_name" value="$(arg robot_id)" />
         </include>
+
+        <group if="$(eval arg('nav_name') == 'napolean')">
+            <include file="$(find ropod_com_mediator)/launch/com_mediator_sim.launch">
+                <arg name="robot_name" value="$(arg robot_id)" />
+                <arg name="debug_mode" value="true" />
+            </include>
+
+            <include file="$(find osm_bridge_ros_wrapper)/ros/launch/osm_bridge.launch" >
+                <arg name="building" value="$(arg building)" />
+            </include>
+
+            <include file="$(find ropod_wm_mediator)/launch/wm_mediator_sim.launch" />
+
+            <include file="$(find route_planner)/launch/route_planner.launch" >
+                <!-- <arg name="robot_name" value="$(arg robot_id)" /> -->
+                <arg name="sim_mode" value="true" />
+            </include>
+
+            <include file="$(find ropod_navigation_mediator)/launch/ropod_navigation_mediator.launch" >
+                <arg name="robot_name" value="$(arg robot_id)" />
+                <arg name="sim_mode" value="true" />
+            </include>
+
+            <include file="$(find napoleon_navigation)/launch/napoleon_navigation_brsu.launch" >
+                <arg name="robot_name" value="$(arg robot_id)" />
+                <arg name="sim_mode" value="true" />
+            </include>
+
+            <include file="$(find ropod_task_executor)/launch/task_executor_sim.launch">
+                <arg name="robot_name" value="$(arg robot_id)" />
+            </include>
+        </group>
     </group>
 
 </launch>
