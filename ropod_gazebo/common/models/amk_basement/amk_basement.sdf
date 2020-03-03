@@ -1,0 +1,19 @@
+<?xml version='1.0'?>
+<sdf version='1.5'>
+ <model name="amk_basement">
+    <pose>-38 -130 1.25  0 0 0</pose>
+    <static>true</static>
+    <link name="body">
+      <visual name="visual">
+        <geometry>
+          <mesh><uri>file://amk_basement.stl</uri></mesh>
+        </geometry>
+      </visual>
+      <collision name="collision">
+        <geometry>
+          <mesh><uri>file://amk_basement.stl</uri></mesh>
+        </geometry>
+      </collision>
+    </link>
+  </model>
+</sdf>

@@ -1,370 +1,174 @@
-<?xml version="1.0"?>
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="ropod">
-<xacro:property name="base_length" value=".5" />
-<xacro:property name="base_width" value=".5" />
-<xacro:property name="base_thickness" value=".2" />
-<xacro:property name="wheel_length" value=".04" />
-<xacro:property name="wheel_radius" value=".08" />
-<xacro:property name="wheel_mass" value="1" />
-<xacro:property name="base_mass" value="8" />
-<xacro:property name="inertia_base" value="0.5" />
-<xacro:property name="inertia_wheels" value="0.001" />
-<xacro:property name="imu_link" value="0.025" />
-<xacro:property name="camera_link" value="0.025" />
+<?xml version='1.0'?>
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro"
+       name="ropod" >
 
-  <link name="ropod/base_link">
-    <visual>
-      <geometry>
-        <box size="${base_length} ${base_width} ${base_thickness} "/>
-      </geometry>
-    </visual>
-    <collision>
-      <geometry>
-        <box size="${base_length} ${base_width} ${base_thickness} "/>
-      </geometry>
-    </collision>
-    <inertial>
-      <mass value="${base_mass}"/>
-      <inertia ixx="${inertia_base}" ixy="0.0" ixz="0.0" iyy="${inertia_base}" iyz="0.0" izz="${inertia_base}"/>
-    </inertial>
-  </link>
+    <xacro:property name="namespace" value="$(arg namespace)"/>
+    <xacro:arg name="namespace" default="ropod"/>
 
+    <xacro:property name="base_length" value="0.6" />
+    <xacro:property name="base_thickness" value="0.1" />
+    <xacro:property name="wheel_radius" value="0.05" />
+    <xacro:property name="wheel_mass" value="1.0" />
+    <xacro:property name="base_mass" value="8.0" />
+    <xacro:property name="inertia_base" value="0.5" />
+    <xacro:property name="inertia_wheels" value="0.001" />
 
-  <link name="right_front_wheel">
-    <visual>
-      <geometry>
-        <cylinder length="${wheel_length}" radius="${wheel_radius}"/>
-      </geometry>
-    </visual>
-    <collision>
-      <geometry>
-        <cylinder length="${wheel_length}" radius="${wheel_radius}"/>
-      </geometry>
-    </collision>
-    <inertial>
-      <mass value="${wheel_mass}"/>
-      <inertia ixx="${inertia_wheels}" ixy="0.0" ixz="0.0" iyy="${inertia_wheels}" iyz="0.0" izz="${inertia_wheels}"/>
-    </inertial>
-  </link>
+    <xacro:include filename="$(find ropod_description)/xacro/hokuyo.xacro" />
 
-  <joint name="right_front_wheel_joint" type="continuous">
-    <parent link="ropod/base_link"/>
-    <child link="right_front_wheel"/>
-    <axis xyz="0 0 1" />
-    <origin rpy="-1.57 0 0" xyz="0.2 -0.2 -0.1"/>
-  </joint>
+    <material name="silver">
+        <color rgba="0.6 0.6 0.6 1.0"/>
+    </material>
 
-  <link name="right_back_wheel">
-    <visual>
-      <geometry>
-        <cylinder length="${wheel_length}" radius="${wheel_radius}"/>
-      </geometry>
-    </visual>
-    <collision>
-      <geometry>
-        <cylinder length="${wheel_length}" radius="${wheel_radius}"/>
-      </geometry>
-    </collision>
-    <inertial>
-      <mass value="${wheel_mass}"/>
-      <inertia ixx="${inertia_wheels}" ixy="0.0" ixz="0.0" iyy="${inertia_wheels}" iyz="0.0" izz="${inertia_wheels}"/>
-    </inertial>
-  </link>
+    <material name="black">
+        <color rgba="0.0 0.0 0.0 1.0"/>
+    </material>
 
-  <joint name="right_back_wheel_joint" type="continuous">
-    <parent link="ropod/base_link"/>
-    <child link="right_back_wheel"/>
-    <origin rpy="-1.57 0 0" xyz="-0.2 -0.2 -0.1"/>
-    <axis xyz="0 0 1" />
-  </joint>
+    <xacro:macro name="sphere_inertia" params="mass radius">
+        <inertial>
+            <mass value="${mass}" />
+            <inertia ixx="${(mass*0.4)*(radius*radius)}"
+                     iyy="${(mass*0.4)*(radius*radius)}"
+                     iyz="0.0" ixy="0.0" ixz="0.0"
+                     izz="${(mass*0.4)*(radius*radius)}" />
+        </inertial>
+    </xacro:macro>
 
-  <link name="left_front_wheel">
-    <visual>
-      <geometry>
-        <cylinder length="${wheel_length}" radius="${wheel_radius}"/>
-      </geometry>
-    </visual>
-    <collision>
-      <geometry>
-        <cylinder length="${wheel_length}" radius="${wheel_radius}"/>
-      </geometry>
-    </collision>
-    <inertial>
-      <mass value="${wheel_mass}"/>
-      <inertia ixx="${inertia_wheels}" ixy="0.0" ixz="0.0" iyy="${inertia_wheels}" iyz="0.0" izz="${inertia_wheels}"/>
-    </inertial>
-  </link>
+    <xacro:macro name="ropod_wheel" params="name parent *origin mass radius material_name">
+        <joint name="${name}_joint" type="fixed">
+            <xacro:insert_block name="origin" />
+            <parent link="${parent}_link"/>
+            <child link="${name}_link"/>
+        </joint>
+        <link name="${name}_link">
+            <visual>
+                <geometry>
+                    <sphere radius="${radius}" />
+                </geometry>
+                <material name="${material_name}"/>
+            </visual>
+            <collision>
+                <geometry>
+                    <sphere radius="${radius}" />
+                </geometry>
+            </collision>
+            <xacro:sphere_inertia mass="${mass}" radius="${radius}" />
+        </link>
+        <gazebo reference="${name}_link">
+            <material>Gazebo/Black</material>
+        </gazebo>
+    </xacro:macro>
 
-  <joint name="left_front_wheel_joint" type="continuous">
-    <parent link="ropod/base_link"/>
-    <child link="left_front_wheel"/>
-    <origin rpy="-1.57 0 0" xyz="0.2 0.2 -0.1"/>
-    <axis xyz="0 0 1" />
-  </joint>
+    <link name='base_link' />
 
-  <link name="left_back_wheel">
-    <visual>
-      <geometry>
-        <cylinder length="${wheel_length}" radius="${wheel_radius}"/>
-      </geometry>
-    </visual>
-    <collision>
-      <geometry>
-        <cylinder length="${wheel_length}" radius="${wheel_radius}"/>
-      </geometry>
-    </collision>
-    <inertial>
-      <mass value="${wheel_mass}"/>
-      <inertia ixx="${inertia_wheels}" ixy="0.0" ixz="0.0" iyy="${inertia_wheels}" iyz="0.0" izz="${inertia_wheels}"/>
-    </inertial>
-  </link>
+    <joint name='base_body_joint' type='fixed'>
+        <origin xyz='0.0 0.0 ${wheel_radius*2 + base_thickness*0.5}' rpy='0 0 0'/>
+        <parent link='base_link'/>
+        <child link='base_body_link'/>
+    </joint>
 
-  <joint name="left_back_wheel_joint" type="continuous">
-    <parent link="ropod/base_link"/>
-    <child link="left_back_wheel"/>
-    <origin rpy="-1.57 0 0" xyz="-0.2 0.2 -0.1"/>
-    <axis xyz="0 0 1" />
-  </joint>
+    <link name='base_body_link'>
+        <visual>
+            <geometry>
+                <box size="${base_length} ${base_length} ${base_thickness}"/>
+            </geometry>
+            <origin xyz='0.0 0.0 0.0' rpy='0.0 0.0 0.0' />
+            <material name="silver"/>
+        </visual>      
+        <collision>
+            <geometry>
+                <box size="${base_length} ${base_length} ${base_thickness}"/>
+            </geometry>
+            <origin xyz='0.0 0.0 0.0' rpy='0.0 0.0 0.0' />
+        </collision>      
+        <inertial>
+          <mass value="${base_mass}"/>
+          <inertia ixx="${inertia_base}" ixy="0.0" ixz="0.0" iyy="${inertia_base}" iyz="0.0" izz="${inertia_base}"/>
+        </inertial>
+    </link>
+
+    <gazebo reference="base_body_link">
+        <material>Gazebo/RustySteel</material>
+    </gazebo>
 
 
-  <!-- Hokuyo Laser -->
-  <link name="ropod/laser/scan">
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-    <box size="0.1 0.1 0.1"/>
-      </geometry>
-    </collision>
-
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <mesh filename="package://ropod_description/meshes/hokuyo.dae"/>
-      </geometry>
-    </visual>
-
-    <inertial>
-      <mass value="1e-5" />
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
-    </inertial>
-  </link>
-
-  <joint name="hokuyo_joint" type="fixed">
-    <axis xyz="0 0 1" />
-    <origin xyz="0.3 0.0 0.1" rpy="0 0 0"/>
-    <parent link="ropod/base_link"/>
-    <child link="ropod/laser/scan"/>
-  </joint>
-
-  <!-- hokuyo -->
-  <gazebo reference="ropod/laser/scan">
-    <sensor type="ray" name="hokuyo_sensor">
-      <pose>0 0 0 0 0 0</pose>
-      <visualize>true</visualize>
-      <update_rate>20</update_rate>
-      <ray>
-        <scan>
-          <horizontal>
-            <samples>360</samples>
-            <resolution>1</resolution>
-            <min_angle>-1.57</min_angle>
-            <max_angle>1.57</max_angle>
-          </horizontal>
-        </scan>
-        <range>
-          <min>0.1</min>
-          <max>5.0</max>
-          <resolution>0.1</resolution>
-        </range>
-        <noise>
-          <type>gaussian</type>
-          <!-- Noise parameters based on published spec for Hokuyo laser
-               achieving "+-30mm" accuracy at range < 10m.  A mean of 0.0m and
-               stddev of 0.01m will put 99.7% of samples within 0.03m of the true
-               reading. -->
-          <mean>0.0</mean>
-          <stddev>0.01</stddev>
-        </noise>
-      </ray>
-      <plugin name="gazebo_ros_head_hokuyo_controller" filename="libgazebo_ros_laser.so">
-        <!--robotNamespace>/</robotNamespace-->
-        <topicName>/ropod/laser/scan</topicName>
-        <frameName>ropod/laser/scan</frameName>
-      </plugin>
-    </sensor>
-  </gazebo>
+    <!-- ====== -->
+    <!-- WHEELS -->
+    <!-- ====== -->
+    <xacro:ropod_wheel name="left_rear_wheel" parent="base_body" mass="${wheel_mass}"
+                       radius="${wheel_radius}" material_name="black">
+        <origin xyz='${-base_length*0.5 + wheel_radius} ${base_length*0.5 - wheel_radius} ${-base_thickness*0.5 - wheel_radius}' rpy='0 0 0'/>
+    </xacro:ropod_wheel>
 
 
-  <!-- IMU -->
-  <link name="ropod/imu">
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-    <box size="${imu_link} ${imu_link} ${imu_link}"/>
-      </geometry>
-    </collision>
+    <xacro:ropod_wheel name="right_rear_wheel" parent="base_body" mass="${wheel_mass}"
+                       radius="${wheel_radius}" material_name="black">
+        <origin xyz='${-base_length*0.5 + wheel_radius} ${-base_length*0.5 + wheel_radius} ${-base_thickness*0.5 - wheel_radius}' rpy='0 0 0'/>
+    </xacro:ropod_wheel>
 
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-    <box size="${imu_link} ${imu_link} ${imu_link}"/>
-      </geometry>
-    </visual>
 
-    <inertial>
-      <mass value="1e-5" />
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
-    </inertial>
-  </link>
+    <xacro:ropod_wheel name="left_front_wheel" parent="base_body" mass="${wheel_mass}"
+                       radius="${wheel_radius}" material_name="black">
+        <origin xyz='${base_length*0.5 - wheel_radius} ${base_length*0.5 - wheel_radius} ${-base_thickness*0.5 - wheel_radius}' rpy='0 0 0'/>
+    </xacro:ropod_wheel>
 
-  <joint name="imu_joint" type="fixed">
-    <origin xyz="0 0 0"/>
-    <parent link="ropod/base_link"/>
-    <child link="ropod/imu"/>
-  </joint>
 
-  <gazebo>
-    <plugin name="imu_controller" filename="libgazebo_ros_imu.so">
-      <alwaysOn>true</alwaysOn>
-      <updateRate>50.0</updateRate>
-      <!--robotNamespace>ropod</robotNamespace--> 
-      <bodyName>ropod/imu</bodyName>
-      <topicName>ropod/imu</topicName>
-      <gaussianNoise>0.0001</gaussianNoise>
-      <xyzOffsets>0 0 0</xyzOffsets>
-      <rpyOffsets>0 0 0</rpyOffsets>
-      <position name="imu_position"/>
-    </plugin>
-  </gazebo>
+    <xacro:ropod_wheel name="right_front_wheel" parent="base_body" mass="${wheel_mass}" 
+                       radius="${wheel_radius}" material_name="black">
+        <origin xyz='${base_length*0.5 - wheel_radius} ${-base_length*0.5 + wheel_radius} ${-base_thickness*0.5 - wheel_radius}' rpy='0 0 0'/>
+    </xacro:ropod_wheel>
 
-   <gazebo>
-    <plugin name="magnetometer" filename="libhector_gazebo_ros_magnetic.so">
-      <updateRate>20.0</updateRate>
-      <bodyname>ropod/imu</bodyname>
-      <topicName>ropod/magnetometer</topicName>
-      <referenceHeading>0.0</referenceHeading>
-      <declination>3.0333</declination>
-      <inclination>60.0</inclination>
-      <offset>0 0 0</offset>
-      <driftFrequency>0 0 0</driftFrequency>
-      <gaussianNoise>0 0 0</gaussianNoise>
-    </plugin>
-  </gazebo>
 
-  <gazebo>
-    <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
-      <updateRate>50.0</updateRate>
-      <!--robotNamespace>ropod</robotNamespace-->
-      <leftFrontJoint>left_front_wheel_joint</leftFrontJoint>
-      <rightFrontJoint>right_front_wheel_joint</rightFrontJoint>
-      <leftRearJoint>left_back_wheel_joint</leftRearJoint>
-      <rightRearJoint>right_back_wheel_joint</rightRearJoint>
-      <wheelSeparation>0.2</wheelSeparation>
-      <wheelDiameter>0.035</wheelDiameter>
-      <robotBaseFrame>ropod/base_link</robotBaseFrame>
-      <torque>5</torque>
-      <commandTopic>cmd_vel</commandTopic>
-      <odometryTopic>odom</odometryTopic>
-      <odometryFrame>ropod/odom</odometryFrame>
-      <childFrame>ropod/base_link</childFrame>
-      <broadcastTF>true</broadcastTF>
-      <gaussianNoise>0.005</gaussianNoise>
-    </plugin>
-  </gazebo> 
+    <!-- ===== -->
+    <!-- LASER -->
+    <!-- ===== -->
+    <xacro:hokuyo name="front_laser" parent="base_body" namespace="${namespace}"
+                  ros_topic="scan" update_rate="20" min_angle="-1.57" max_angle="1.57">
+        <origin xyz='0.25 0.0 0.08' rpy='0 0 0'/>
+    </xacro:hokuyo>
 
-  <joint name="camera_joint" type="fixed">
-    <axis xyz="0 1 0" />
-    <origin xyz="0.3 0.0 0.0" rpy="0 0 0"/>
-    <parent link="ropod/base_link"/>
-    <child link="ropod/camera"/>
-  </joint>
 
-  <!-- Camera -->
-  <link name="ropod/camera">
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-    <box size="${camera_link} ${camera_link} ${camera_link}"/>
-      </geometry>
-    </collision>
+    <!-- ====================== -->
+    <!-- HOLONOMIC DRIVE PLUGIN -->
+    <!-- ====================== -->
+    <gazebo>
+    <plugin name="${namespace}_odometry_plugin" filename="libOdometry_Plugin.so">
+            <updateRate>20.0</updateRate>
+            <veltopicName>/${namespace}/cmd_vel</veltopicName>
+            <odomtopicName>/${namespace}/odom</odomtopicName>
+            <robotBaseFrame>/${namespace}/base_link</robotBaseFrame>
+            <odomFrame>/${namespace}/odom</odomFrame>
+        </plugin>
+    </gazebo>
 
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-    <box size="${camera_link} ${camera_link} ${camera_link}"/>
-      </geometry>
-      <material name="red"/>
-    </visual>
 
-    <inertial>
-      <mass value="1e-5" />
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
-    </inertial>
-  </link>
+    <!-- ========== -->
+    <!-- DECORATION -->
+    <!-- ========== -->
+    <joint name='computer_joint' type='fixed'>
+        <origin xyz='0.0 0.0 0.1' rpy='0 0 0'/>
+        <parent link='base_body_link'/>
+        <child link='computer_link'/>
+    </joint>
 
-  <!-- camera -->
-  <gazebo reference="ropod/camera">
-    <sensor type="camera" name="front_camera">
-      <update_rate>30.0</update_rate>
-      <camera name="head">
-        <horizontal_fov>1.3962634</horizontal_fov>
-        <image>
-          <width>800</width>
-          <height>600</height>
-          <format>R8G8B8</format>
-        </image>
-        <clip>
-          <near>0.02</near>
-          <far>300</far>
-        </clip>
-        <noise>
-          <type>gaussian</type>
-          <!-- Noise is sampled independently per pixel on each frame.
-               That pixel's noise value is added to each of its color
-               channels, which at that point lie in the range [0,1]. -->
-          <mean>0.0</mean>
-          <stddev>0.007</stddev>
-        </noise>
-      </camera>
-      <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
-        <alwaysOn>true</alwaysOn>
-        <updateRate>0.0</updateRate>
-        <cameraName>/ropod/camera</cameraName>
-        <imageTopicName>image_raw</imageTopicName>
-        <cameraInfoTopicName>camera_info</cameraInfoTopicName>
-        <frameName>ropod/camera</frameName>
-        <hackBaseline>0.07</hackBaseline>
-        <distortionK1>0.0</distortionK1>
-        <distortionK2>0.0</distortionK2>
-        <distortionK3>0.0</distortionK3>
-        <distortionT1>0.0</distortionT1>
-        <distortionT2>0.0</distortionT2>
-      </plugin>
-    </sensor>
-  </gazebo>
-
-  <gazebo reference="ropod/base_link">
-    <material>Gazebo/RustySteel</material>
-  </gazebo>
-
-  <gazebo reference="right_front_wheel">
-    <material>Gazebo/Black</material>
-  </gazebo>
-
-  <gazebo reference="right_back_wheel">
-    <material>Gazebo/Black</material>
-  </gazebo>
-
-  <gazebo reference="left_front_wheel">
-    <material>Gazebo/Black</material>
-  </gazebo>
-
-  <gazebo reference="left_back_wheel">
-    <material>Gazebo/Black</material>
-  </gazebo>
-
+    <link name='computer_link'>
+        <visual>
+            <geometry>
+                <box size='0.2 0.3 0.1'/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+        <collision>
+            <geometry>
+                <box size='0.2 0.3 0.1'/>
+            </geometry>
+        </collision>
+    </link>
+      
+    <gazebo reference="computer_link">
+        <material>Gazebo/Black</material>
+    </gazebo>
 
 </robot>

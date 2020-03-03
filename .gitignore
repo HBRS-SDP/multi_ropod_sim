@@ -1,2 +1,4 @@
 *.DS_Store
 *.pyc
+
+ropod_gazebo/ros/generated_files/
