@@ -218,5 +218,39 @@
           Topic: /ropod_{id}_move_base/current_goal
           Unreliable: false
           Value: true
+        - Class: rviz/Group
+          Displays:
+            - Class: rviz/Marker
+              Enabled: true
+              Marker Topic: /ropod_{id}/napoleon_navigation/napoleon_driving/right_side_wall
+              Name: RightSideWall
+              Queue Size: 100
+              Value: true
+            - Class: rviz/Marker
+              Enabled: true
+              Marker Topic: /ropod_{id}/napoleon_navigation/napoleon_driving/freeAreaOvertakeLeft
+              Name: FreeAreaOvertakeLeft
+              Queue Size: 100
+              Value: true
+            - Class: rviz/Marker
+              Enabled: true
+              Marker Topic: /ropod_{id}/napoleon_navigation/napoleon_driving/freeAreaOvertakeRight
+              Name: FreeAreaOvertakeRight
+              Queue Size: 100
+              Value: true
+            - Class: rviz/Marker
+              Enabled: true
+              Marker Topic: /ropod_{id}/napoleon_navigation/napoleon_driving/ropodpoints
+              Name: RopodPoints
+              Queue Size: 100
+              Value: true
+            - Class: rviz/Marker
+              Enabled: true
+              Marker Topic: /ropod_{id}/napoleon_navigation/napoleon_driving/wmnodes
+              Name: WmNodes
+              Queue Size: 100
+              Value: true
+          Enabled: true
+          Name: Napolean
       Enabled: true
       Name: ropod_{id}
