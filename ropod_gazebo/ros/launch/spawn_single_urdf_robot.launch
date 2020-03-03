@@ -58,7 +58,6 @@
             <include file="$(find ropod_wm_mediator)/launch/wm_mediator_sim.launch" />
 
             <include file="$(find route_planner)/launch/route_planner.launch" >
-                <!-- <arg name="robot_name" value="$(arg robot_id)" /> -->
                 <arg name="sim_mode" value="true" />
             </include>
 
