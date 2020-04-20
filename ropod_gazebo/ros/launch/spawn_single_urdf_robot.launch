@@ -11,7 +11,7 @@
     <arg name="model" default="ropod"/>
     <arg name="model_path" default="$(find ropod_description)/xacro/$(arg model).xacro"/>
     <arg name="start_move_base" default="true"/>
-    <arg name="nav_name" default="move_base_dwa"/>
+    <arg name="nav_name" default="napolean"/>
     <arg name="building" default="BRSU"/>
 
     <!-- Load the robot description from the urdf model -->
