@@ -66,6 +66,11 @@
                 <arg name="sim_mode" value="true" />
             </include>
 
+            <include file="$(find maneuver_navigation)/launch/maneuver_navigation.launch" >
+                <arg name="robotName" value="$(arg robot_id)" />
+                <arg name="sim_mode" value="true" />
+            </include>
+
             <include file="$(find napoleon_navigation)/launch/napoleon_navigation_brsu.launch" >
                 <arg name="robot_name" value="$(arg robot_id)" />
                 <arg name="sim_mode" value="true" />
