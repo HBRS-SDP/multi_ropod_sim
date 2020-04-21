@@ -1,5 +1,6 @@
 local_costmap:
-    global_frame: /ropod_{id}/odom
+    map_topic: /map
+    global_frame: /map
     robot_base_frame: /ropod_{id}/base_link
     update_frequency: 1.0
     publish_frequency: 1.0
