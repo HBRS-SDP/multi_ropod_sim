@@ -1,0 +1,43 @@
+<?xml version='1.0'?>
+<launch>
+        <arg name="map_offset_x" default="0.0" />
+	<arg name="map_offset_y" default="0.0" />
+	<arg name="map_offset_theta" default="0.0" />
+	<arg name="start_move_base" default="true" />
+
+
+	<!-- ROBOT 001-->
+	<group ns="ropod_001">
+		<param name="tf_prefix" value="ropod_001" />
+		<include file="$(find ropod_gazebo)/ros/launch/spawn_single_urdf_robot.launch" >
+			<arg name="robot_id" value="ropod_001" />
+			<arg name="init_x" value="-0.71" />
+			<arg name="init_y" value="-2.33" />
+			<arg name="init_theta" value="-2.356" />
+			<arg name="model" value="ropod"/>
+			<arg name="map_offset_x" value="$(arg map_offset_x)" />
+			<arg name="map_offset_y" value="$(arg map_offset_y)" />
+			<arg name="map_offset_theta" value="$(arg map_offset_theta)" />
+			<arg name="start_move_base" value="$(arg start_move_base)"/>
+		</include>
+	</group>
+
+
+	<!-- ROBOT 002-->
+	<group ns="ropod_002">
+		<param name="tf_prefix" value="ropod_002" />
+		<include file="$(find ropod_gazebo)/ros/launch/spawn_single_urdf_robot.launch" >
+			<arg name="robot_id" value="ropod_002" />
+			<arg name="init_x" value="-27.54516" />
+			<arg name="init_y" value="-53.2444" />
+			<arg name="init_theta" value="-0.7855" />
+			<arg name="model" value="ropod"/>
+			<arg name="map_offset_x" value="$(arg map_offset_x)" />
+			<arg name="map_offset_y" value="$(arg map_offset_y)" />
+			<arg name="map_offset_theta" value="$(arg map_offset_theta)" />
+			<arg name="start_move_base" value="$(arg start_move_base)"/>
+		</include>
+	</group>
+
+
+</launch>

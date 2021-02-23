@@ -1,0 +1,6 @@
+global_costmap:
+    global_frame: /map
+    robot_base_frame: /ropod_002/base_link
+    update_frequency: 0.25
+    static_map: true
+    resolution: 0.1

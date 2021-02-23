@@ -1,18 +1,17 @@
 <?xml version="1.0"?>
 <launch>
+
     <env name="GAZEBO_RESOURCE_PATH" value="$(find ropod_gazebo)/common/resources/:$(optenv GAZEBO_MODEL_PATH)"/>
     <env name="GAZEBO_MODEL_PATH" value="$(find ropod_gazebo)/common/models:$(optenv GAZEBO_MODEL_PATH)"/>
 
     <!-- MAP PARAMS -->
-    <arg name="map_file" default="$(find ropod_navigation_test)/../occupancy_grids/brsu/brsu-c-floor0_osm/map.yaml" />
+    <arg name="map_file" default="$(find topological_map_ros)/maps/brsu-full/map.yaml" />
     <!-- offset between gazebo world origin and map origin -->
-    <arg name="map_offset_x" default="59.95" />
-    <arg name="map_offset_y" default="25.6" />
-    <arg name="map_offset_theta" default="0.0" />
+    <arg name="map_offset_x" default="0" />
+    <arg name="map_offset_y" default="0" />
+    <arg name="map_offset_theta" default="0" />
     <arg name="start_move_base" default="true"/>
-    <arg name="nav_name" default="napolean" />
-
-    <arg name="world" default="brsu_ground_floor"/>
+    <arg name="world" default="brsu_topological_map"/>
     <arg name="paused" default="false"/>
     <arg name="use_sim_time" default="true"/>
     <arg name="gui" default="false"/>
@@ -21,7 +20,7 @@
 
     <!-- Load the world -->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
-        <arg name="world_name" value="$(find ropod_gazebo)/common/worlds/$(arg world).world"/>
+        <arg name="world_name" value="$(find ropod_gazebo)/common/worlds/$(arg world).world"/> 
         <arg name="debug" value="$(arg debug)" />
         <arg name="gui" value="$(arg gui)" />
         <arg name="paused" value="$(arg paused)"/>
@@ -34,16 +33,17 @@
         <arg name="map_offset_y" value="$(arg map_offset_y)" />
         <arg name="map_offset_theta" value="$(arg map_offset_theta)" />
         <arg name="start_move_base" value="$(arg start_move_base)"/>
-        <arg name="nav_name" value="$(arg nav_name)"/>
     </include>
 
     <node pkg="ropod_gazebo" name="odom_tf_pub" type="ros_frame_pub" respawn="true" output="screen" />
 
     <!-- Run the map server -->
-    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
+    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" >
+        <param name="frame_id" value="/map" />
+    </node>
 
     <group if="$(arg start_rviz)">
-        <!-- rviz for visualisation -->
+   <!-- rviz for visualisation-->
         <node pkg="rviz" type="rviz" name="rviz" args="-d $(find ropod_gazebo)/ros/generated_files/multi_ropod_sim.rviz" />
     </group>
 

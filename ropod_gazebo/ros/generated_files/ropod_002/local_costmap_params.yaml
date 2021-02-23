@@ -1,0 +1,11 @@
+local_costmap:
+    map_topic: /map
+    global_frame: /map
+    robot_base_frame: /ropod_002/base_link
+    update_frequency: 0.25
+    publish_frequency: 0.25
+    static_map: false
+    rolling_window: true
+    width: 6.0
+    height: 6.0
+    resolution: 0.1
