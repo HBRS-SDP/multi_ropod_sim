@@ -1,0 +1,19 @@
+<?xml version='1.0'?>
+<sdf version='1.5'>
+ <model name="brsu_topological_map">
+    <pose>-0.004676 0.051833 0  0 0 0</pose>
+    <static>true</static>
+    <link name="body">
+      <visual name="visual">
+        <geometry>
+          <mesh><uri>file://brsu_topological_map.stl</uri></mesh>
+        </geometry>
+      </visual>
+      <collision name="collision">
+        <geometry>
+          <mesh><uri>file://brsu_topological_map.stl</uri></mesh>
+        </geometry>
+      </collision>
+    </link>
+  </model>
+</sdf>
