@@ -1,7 +1,15 @@
 # ROPOD Gazebo
-Package to simulate a multi-robot scenario.
+Package to simulate a multi-robot scenario with BRSU Topological Map.
 
-## Generate multi robot launch files
+## Setting initial position of robots
+It is possible to change the initial poses of the robots. You can do so be editting the following file:
+[spawn_multiple_robots.launch](ros/generated_files/spawn_multiple_robots.launch)
+
+## Changing the XY and Theta goal tolerance 
+It is possible to tighten or loosen the tolerance level for the move_base goals in term of xy and theta. This can be done in the following file:
+[base_local_planner_params.yaml](ros/config/move_base_config/base_local_planner_params.yaml)
+
+## Generate multi robot launch files (DISABLED - Need to be refactored)
 It is possible to use a script to generate a launch and configuration file to spawn multiple robots and create a RViz config file to visualize the simulations. The script can be launched as follows:
 
 ```
@@ -29,14 +37,13 @@ roslaunch ropod_gazebo multi_robot.launch
 
 The launch file supports the following additional commonly used params:
 1. `start_move_base`: Activate/Deactivate the move_base package. (Default: `true`)
-2. `nav_name`: Name of the navigation stack to use. Possible values: `move_base_dwa` (default), `move_base_teb`
-3. `gui`: Launch the Gazebo Client (i.e. the GUI). (Default: `false`)
-4. `start_rviz`: Launch RViz. (Default: `true`)
+2. `gui`: Launch the Gazebo Client (i.e. the GUI). (Default: `false`)
+3. `start_rviz`: Launch RViz. (Default: `true`)
 
 For example to use the TEB navigation stack instead of the default DWA, launch the simulation using:
 
 ```
-roslaunch ropod_gazebo multi_robot.launch nav_name:=move_base_teb
+roslaunch ropod_gazebo multi_robot.launch gui:=true
 ```
 
 ## Teleoperate the robots
