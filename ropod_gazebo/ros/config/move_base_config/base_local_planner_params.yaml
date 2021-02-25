@@ -37,10 +37,10 @@ TrajectoryPlannerROS:
 
     # Goal Tolerance Parameters
     # =========================
-    yaw_goal_tolerance: 0.1                     # (double, default: 0.05)
+    yaw_goal_tolerance: 0.25                     # (double, default: 0.05)
     # The tolerance in radians for the controller in yaw/rotation when achieving its goal
 
-    xy_goal_tolerance: 0.2                      # (double, default: 0.10)
+    xy_goal_tolerance: 0.30                      # (double, default: 0.10)
     # The tolerance in meters for the controller in the x & y distance when achieving a goal
 
     latch_xy_goal_tolerance: true               # (bool, default: false)
